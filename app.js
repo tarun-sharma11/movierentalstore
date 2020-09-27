@@ -29,12 +29,14 @@ const loginRouters = require("./routes/login");
 const distriRouters = require("./routes/distributor");
 const empRouters = require("./routes/employees");
 const rentRouters = require("./routes/rents");
+const payRouters = require("./routes/payments");
 app.use(movieRouters);
 app.use(loginRouters);
 app.use(distriRouters); 
 app.use(empRouters);  
 app.use(rentRouters);
+app.use(payRouters);
 // Server config
-app.listen(process.env.PORT || 8080, process.env.IP,()=>{
+app.listen(process.env.PORT || 9898, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");
 })	
