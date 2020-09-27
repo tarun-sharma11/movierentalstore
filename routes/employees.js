@@ -149,7 +149,7 @@ router.put("/employee/update/:sin",async(req,res)=>{
     // console.log(name,email,passworzd);
     } catch (err) {
        console.error(err.message);
-    }  
+    }   
 });
 
 router.delete("/employee/delete/:sin",async(req,res)=>{ //middleware.ifsurvisor,
