@@ -31,6 +31,7 @@ const empRouters = require("./routes/employees");
 const rentRouters = require("./routes/rents");
 const payRouters = require("./routes/payments");
 const customRouters = require("./routes/customers");
+const storeRouters = require("./routes/stores");
 app.use(movieRouters);
 app.use(loginRouters);
 app.use(distriRouters); 
@@ -38,7 +39,8 @@ app.use(empRouters);
 app.use(rentRouters);
 app.use(payRouters);
 app.use(customRouters);
+app.use(storeRouters);
 // Server config
-app.listen(process.env.PORT || 8989, process.env.IP,()=>{
+app.listen(process.env.PORT || 7777, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");
 })	
