@@ -3,7 +3,7 @@ const express = require("express"),
 const {pool} = require("../db");
 const middleware = require("../middleware");
   
-router.post("/movies",async(req,res)=>{  //,middleware.ifsurvisor
+router.post("/movies/add",async(req,res)=>{  //,middleware.ifsurvisor
 	try {
 		const {stock,price,st_id,title,direct,descp,gene,rating,nos} = req.body;
 		
@@ -19,13 +19,13 @@ router.post("/movies",async(req,res)=>{  //,middleware.ifsurvisor
 		console.error(err.message);
 	}
 });
-router.get("/addMovie",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/movie/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		res.send("./movies/addmovie");
 	} catch (err) {
 		console.error(err.message);
 	}
-})
+});
 router.get("/movies",async(req,res)=>{  //,middleware.ifAuthenticated
 	try {
 		const allMovie = await pool.query("SELECT * FROM TAPES INNER JOIN MOVIES ON TAPE_ID=TAPE_ID");

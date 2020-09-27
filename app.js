@@ -26,9 +26,10 @@ seed();
 // Routes
 const movieRouters = require("./routes/movies");
 const loginRouters = require("./routes/login");
+const distriRouters = require("./routes/distributor");
 app.use(movieRouters);
 app.use(loginRouters);
-
+app.use(distriRouters); 
 
 
 // Server config
