@@ -27,12 +27,13 @@ seed();
 const movieRouters = require("./routes/movies");
 const loginRouters = require("./routes/login");
 const distriRouters = require("./routes/distributor");
+const empRouters = require("./routes/employees");
 app.use(movieRouters);
 app.use(loginRouters);
 app.use(distriRouters); 
-
+app.use(empRouters);  
 
 // Server config
-app.listen(process.env.PORT || 8989, process.env.IP,()=>{
-	console.log("test server started");
+app.listen(process.env.PORT || 3333 , process.env.IP,()=>{
+	console.log("DBMS Miniproject server started");
 })	
