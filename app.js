@@ -39,6 +39,6 @@ app.use(rentRouters);
 app.use(payRouters);
 app.use(customRouters);
 // Server config
-app.listen(process.env.PORT || 8002, process.env.IP,()=>{
+app.listen(process.env.PORT || 8989, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");
 })	
