@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+</head>
+<body>
+	<a href="/">Home page</a>
+	<a href="/user/logout">Logout</a>
+    <table border="1" >
+		<thead>
+			<tr>
+                <th>Id</th>
+				<th >Description</th>				
+			</tr>
+		</thead>
+		<tbody>
+            <% movies.forEach((movie)=>{%>
+            <tr>
+				<td><%=movie.id%></td>
+				<td><%=movie.description%></td>
+				
+				
+				<td><a href="/movies/<%=movie.id%>/update">Update</a></td>
+				<td><form action="/movies/<%=movie.id%>?_method=DELETE" method="POST">
+					<button type="submit">Delete</button>
+					</form>
+				</td>
+			
+			</tr>
+			
+            <%})%>
+									
+		</tbody>
+	</table>
+	<a href="/addMovie">Add Movie</a>
+	<a href="/user/supervisor">Add Supervisor</a>
+</body>
+</html>
