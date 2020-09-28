@@ -21,7 +21,7 @@ middlewareObj.ifnotAuthenticated = (req,res,next)=>{
 middlewareObj.ifsurvisor = (req,res,next)=>{
     if(req.isAuthenticated()){
         const iden= (req.user.sin);
-        pool.query("select id from supervisors where id=$1",[iden],(err,results)=>{
+        pool.query("select sin from supervisors where sin=$1",[iden],(err,results)=>{
             if(err){
                 return res.redirect("back");
             }

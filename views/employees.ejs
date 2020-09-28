@@ -1,0 +1,76 @@
+<%- include("./partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">
+                <div>
+                <span>Employees</span> 
+                <span><a style="margin-left: 80%;" class="btn button-small button-secondary" href="newemployee.html">Add New</a></span> 
+                </div>
+            </div>
+            </h1>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Working Store ID</th>
+                    <th>Email</th>
+                    <th>SIN</th>
+                    <th>Name</th>
+                    <th>Phone number</th>
+                    <th>Salary</th>
+                    <th>Hire Date (YYYY-MM-DD)</th>
+                    <th>Birth Date (YYYY-MM-DD)</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <% employees.forEach((employee)=>{%>
+                <tr>
+                    <td><%= employee.store_id%></td>
+                    <td><%= employee.email%></td>
+                    <td><%= employee.sin%></td>
+                    <td><%= employee.ename%></td>
+                    <td><%= employee.ph%></td>
+                    <td><%= employee.salary%></td>
+                    <td><%= employee.doj%></td>
+                    <td><%= employee.dob%></td>
+                    <td><%= employee.address%></td>
+                    <td><a href="/employee/update/<%=employee.sin%>">Update</a></td>
+                    <td>
+                        <form action="/employee/delete/<%=employee.sin%>?_method=DELETE" method="POST">
+                        <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <% supervise.forEach((sup)=>{%>
+                        <% if(sup.sin==employee.sin){%>
+                        <td>
+                            <form action="/supervisor/delete/<%=employee.sin%>?_method=DELETE" method="POST">
+                                <button type="submit">Remove Supervisor</button>
+                                </form>
+                        </td>
+                    <%}%>
+                    <%})%>
+                    
+                </tr>
+                <%})%>
+           
+                </tbody>
+            </table>
+        </div>
+
+        <div class="navigation">
+            <div class="btn-group">
+                <a href="#" class="btn">Prev</a>
+                <a href="#" class="btn">Next</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

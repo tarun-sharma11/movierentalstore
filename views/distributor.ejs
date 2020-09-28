@@ -1,0 +1,54 @@
+<%- include("./partials/header") %>
+
+        <div class="pureent hamdash1 fillin-val">
+            <div class="header-small">
+
+                <div class="items">
+                    <h1 class="subhead">
+                        Distributor
+                         </div>
+                    </div>
+                    </h1>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            
+                            <th>Distributor Name</th>
+                            <th>Phone number</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <% distributors.forEach((distri)=>{%>
+                                <tr>
+                                    <td><%=distri.dname%></td>
+                                    <td><%=distri.address%></td>
+                                    <td><%=distri.phone%></td>
+                                    
+                                    
+                                    <td><a href="/distributor/update/<%=distri.dname%>">Update</a></td>
+                                    <td>
+                                        <form action="/distributor/delete/<%=distri.dname%>?_method=DELETE" method="POST">
+                                        <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                
+                                </tr>
+                                
+                                <%})%>
+                        
+                        </tbody>
+                    </table>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

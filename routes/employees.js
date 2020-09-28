@@ -6,10 +6,10 @@ const middleware = require("../middleware");
 
 // add supervisor
 
-router.get("/supervisor/add",(req,res)=>{
+router.get("/supervisor/add",middleware.ifsurvisor,(req,res)=>{
     res.render("supervisor");
 });
-router.post("/supervisor/add",async(req,res)=>{
+router.post("/supervisor/add",middleware.ifsurvisor,async(req,res)=>{
         try {
             const {email} = req.body;
              
@@ -36,7 +36,7 @@ router.post("/supervisor/add",async(req,res)=>{
 
 // delete supervisor
 
-router.delete("/supervisor/delete/:sin",async(req,res)=>{
+router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
     try {
         const {sin} = req.params;
          
@@ -52,7 +52,8 @@ router.delete("/supervisor/delete/:sin",async(req,res)=>{
                 if(err)
                 console.log(err)
                 if(results)
-                res.json("deleted");
+                // res.json("deleted");
+                res.redirect("/")
             })
     }
     }
@@ -61,13 +62,26 @@ router.delete("/supervisor/delete/:sin",async(req,res)=>{
     }
 });
 
+// display
+
+router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifsurvisor
+	try {
+		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
+		// res.json(aemployee.rows);
+        const asup = await pool.query("SELECT * FROM SUPERVISORS");
+		res.render('employees',{employees:aemployee.rows,supervise:asup.rows});
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
 // add employees
 
-router.get("/employee/add",async(req,res)=>{
+router.get("/employee/add",middleware.ifsurvisor,async(req,res)=>{
     res.render("register");
 });
 
-router.post("/employee/add",async(req,res)=>{
+router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
     try {
         const {sin,name,address,dob,doj,stid,sal,email,password,password2,ph} = req.body;
         let errors = []
@@ -108,11 +122,11 @@ router.post("/employee/add",async(req,res)=>{
 
 // update employees;
 
-router.get("/employee/update/:sin",async(req,res)=>{
+router.get("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{
     res.render("register");
 });
 
-router.put("/employee/update/:sin",async(req,res)=>{
+router.put("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{
     try {
         const {sin} = req.params;
         const {name,address,dob,doj,stid,sal,email,password,password2,ph} = req.body;
@@ -152,7 +166,7 @@ router.put("/employee/update/:sin",async(req,res)=>{
     }   
 });
 
-router.delete("/employee/delete/:sin",async(req,res)=>{ //middleware.ifsurvisor,
+router.delete("/employee/delete/:sin",middleware.ifsurvisor,async(req,res)=>{ //middleware.ifsurvisor,
 	try {
 		const {sin} = (req.params);
 		
@@ -160,8 +174,8 @@ router.delete("/employee/delete/:sin",async(req,res)=>{ //middleware.ifsurvisor,
         [sin],
         (err,result)=>{
             if(result)
-            res.json("Deleted the tape");
-		// res.redirect("/movies")
+            // res.json("Deleted the tape");
+		res.redirect("/employee");
         }
 		);
 		

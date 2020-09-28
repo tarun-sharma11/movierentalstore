@@ -8,7 +8,7 @@ router.get("/",(req,res)=>{
     res.render("homepage");
 });
 router.get("/dashboard",(req,res)=>{
-    res.send("dashboard");
+    res.render("dashboard");
 })
 
 router.post("/user/login",passport.authenticate("local",{

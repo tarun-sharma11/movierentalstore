@@ -8,9 +8,9 @@ const middleware = require("../middleware");
 router.get("/distributor",async(req,res)=>{  //middleware.ifsurvisor
 	try {
 		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME");
-		res.json(aDistributor.rows);
+		// res.json(aDistributor.rows);
 
-		// res.render('./movies/movies',{movies:allMovie.rows});
+		res.render('distributor',{distributors:aDistributor.rows});
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -26,7 +26,7 @@ router.get("/distributor/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.i
 	}
 });
 
-router.post("/distributor/add",async(req,res)=>{  //,middleware.ifsurvisor
+router.post("/distributor/add",middleware.ifsurvisor,async(req,res)=>{  //
 	try {
 		const {dname,address,ph} = req.body;
 		
@@ -58,7 +58,7 @@ router.get("/distributor/update/:dname",middleware.ifsurvisor,(req,res)=>{ //,mi
 	}
 });
 
-router.put("/distributor/update/:dname",async(req,res)=>{  //,middleware.ifsurvisor
+router.put("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{  //
 	try {
         const {dname}= req.params;
 		const {address,ph} = req.body;
@@ -83,15 +83,17 @@ router.put("/distributor/update/:dname",async(req,res)=>{  //,middleware.ifsurvi
 
 // delete
 
-router.delete("/distributor/delete/:dname",async(req,res)=>{ //middleware.ifsurvisor,
+router.delete("/distributor/delete/:dname",middleware.ifsurvisor,async(req,res)=>{ //
 	try {
 		const {dname} = (req.params);
-		
-		const deleteMovie = await pool.query("CALL DEL_DISTRI($1::VARCHAR)",
+		console.log(dname);
+		await pool.query("CALL DEL_DISTRI($1::VARCHAR)",
         [dname],
         (err,result)=>{
-            res.json("Deleted the tape");
-		// res.redirect("/movies")
+			if(err)
+			res.json(err);
+			if(result)
+			res.redirect("/distributor");
         }
 		);
 		
