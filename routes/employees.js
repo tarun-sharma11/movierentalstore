@@ -69,7 +69,7 @@ router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifs
 		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
 		// res.json(aemployee.rows);
         const asup = await pool.query("SELECT * FROM SUPERVISORS");
-		res.render('employees',{employees:aemployee.rows,supervise:asup.rows});
+		res.render('./employee/employees',{employees:aemployee.rows,supervise:asup.rows});
 	} catch (err) {
 		console.error(err.message);
 	}
