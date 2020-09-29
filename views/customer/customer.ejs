@@ -1,0 +1,56 @@
+<%- include("../partials/header") %>
+
+        <div class="pureent hamdash1 fillin-val">
+            <div class="header-small">
+
+                <div class="items">
+                    <h1 class="subhead">
+                        Customer
+                         </div>
+                         <a href="/customer/add">Add customer</a>
+                    </div>
+                    </h1>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            
+                            <th>Customer Name</th>
+                            <th>Phone number</th>
+                            <th>Address</th>
+                            <th>Store no</th>
+                            <th>Action</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <% customers.forEach((customer)=>{%>
+                                <tr>
+                                    <td><%=customer.cname%></td>
+                                    <td><%=customer.address%></td>
+                                    <td><%=customer.store_id%></td>
+                                    <td><%=customer.phone%></td>
+                                    
+                                    <td><a href="/customer/update/<%=customer.cus_id%>">Update</a></td>
+                                    <td>
+                                        <form action="/customer/delete/<%=customer.cus_id%>?_method=DELETE" method="POST">
+                                        <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                
+                                </tr>
+                                
+                                <%})%>
+                        
+                        </tbody>
+                    </table>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,8 +7,16 @@ const middleware = require("../middleware");
 
 router.get("/customer",async(req,res)=>{  //middleware.ifsurvisor
 	try {
-		const acustomer = await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID");
-		res.json(acustomer.rows);
+		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID",
+		[],
+		(err,results)=>{
+			if(err)
+			console.log(err)
+			if(results)
+			res.render("./customer/customer",{customers:results.rows})
+
+		});
+		
 
 		// res.render('./movies/movies',{movies:allMovie.rows});
 	} catch (err) {
@@ -18,9 +26,9 @@ router.get("/customer",async(req,res)=>{  //middleware.ifsurvisor
 
 // add  
 
-router.get("/customer/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/customer/add",(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/addmovie");
+		res.render("./customer/addcustomer");
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -34,8 +42,8 @@ router.post("/customer/add",async(req,res)=>{  //,middleware.ifsurvisor
         [cusname,stid,address,ph],
         (err,results)=>{
             if(results){
-            res.json(results.rows[0]);
-            // res.redirect("/movies"); 
+            // res.json(results.rows[0]);
+            res.redirect("/customer"); 
             }
             if(err){
                 console.log(err);
@@ -50,9 +58,19 @@ router.post("/customer/add",async(req,res)=>{  //,middleware.ifsurvisor
 
 // UPDATE
 
-router.get("/customer/update/:id",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/customer/update/:id",async(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/update/:id");
+		const {id} = req.params;
+		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID WHERE CUSTOMERS.CUS_ID=$1",
+		[id],
+		(err,result)=>{
+			if(err)
+			console.log(err)
+			if(result)
+			res.render("./customer/updcustomer",{customer:result.rows[0]});
+		})
+
+		
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -67,8 +85,8 @@ router.put("/customer/update/:id",async(req,res)=>{  //,middleware.ifsurvisor
         [id,cusname,stid,address,ph],
         (err,results)=>{
             if(results){
-            res.json("update");
-            // res.redirect("/movies"); 
+            // res.json("update");
+            res.redirect("/customer"); 
             }
             if(err){
                 console.log(err);
@@ -87,10 +105,13 @@ router.delete("/customer/delete/:id",async(req,res)=>{ //middleware.ifsurvisor,
 	try {
 		const {id} = (req.params);
 		
-		const deleteMovie = await pool.query("CALL DEL_CUS($1::INTEGER)",
+		await pool.query("CALL DEL_CUS($1::INTEGER)",
         [id],
         (err,result)=>{
-            res.json("Deleted the tape");
+			if(result)
+			res.redirect("/customer");
+			if(err)
+			console.log(err);
 		// res.redirect("/movies")
         }
 		);
