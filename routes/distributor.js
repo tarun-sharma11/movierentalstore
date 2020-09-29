@@ -10,7 +10,7 @@ router.get("/distributor",async(req,res)=>{  //middleware.ifsurvisor
 		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME");
 		// res.json(aDistributor.rows);
 
-		res.render('distributor',{distributors:aDistributor.rows});
+		res.render('./distributor/distributor',{distributors:aDistributor.rows});
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -20,7 +20,7 @@ router.get("/distributor",async(req,res)=>{  //middleware.ifsurvisor
 
 router.get("/distributor/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/addmovie");
+		res.render("./distributor/adddistributor");
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -34,8 +34,8 @@ router.post("/distributor/add",middleware.ifsurvisor,async(req,res)=>{  //
         [dname,address,ph],
         (err,results)=>{
             if(results){
-            res.json(results.rows[0]);
-            // res.redirect("/movies"); 
+            // res.json(results.rows[0]);
+            res.redirect("/distributor"); 
             }
             if(err){
                 console.log(err);
@@ -50,9 +50,11 @@ router.post("/distributor/add",middleware.ifsurvisor,async(req,res)=>{  //
 
 // UPDATE
 
-router.get("/distributor/update/:dname",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/update/:dname");
+		const {dname}= req.params;
+		const aDistributor = await pool.query("SELECT address,phone FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME WHERE DISTRIBUTOR.DNAME=$1",[dname]);
+		res.render("./distributor/updatedistributor",{distributor:aDistributor.rows,dname:dname});
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -67,8 +69,8 @@ router.put("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{ 
         [dname,address,ph],
         (err,results)=>{
             if(results){
-            res.json("update");
-            // res.redirect("/movies"); 
+            // res.json("update");
+            res.redirect("/distributor"); 
             }
             if(err){
                 console.log(err);
