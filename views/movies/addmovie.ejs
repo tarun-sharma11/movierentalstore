@@ -1,15 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a Movie</title>
-</head>
-<body>
-    <a href="/">Home page</a>
-    <form action="/movies" method="post">
-        <label for="description">Description :</label>
-        <input type="text" name="descp" id="description" placeholder="Enter the description">
-    </form>
+<%- include("../partials/header") %>
+
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">Add Movie Details</h1>
+
+            <form action="/movies/add" method="post" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    
+                    <label for="storeid">Store ID</label>
+                    <input id="storeid" type="number" placeholder="Store ID" class="pure-input-1" name="st_id" >
+                    <br>
+                    <label for="MovieName">Movie Name</label>
+                    <input id="MovieName" type="text" placeholder="Movie Name" class="pure-input-1" name="title">
+                    <br>
+                    <label for="Director">Director</label>
+                    <input id="Director" type="text" placeholder="Director" class="pure-input-1" name="direct" >
+                    <br>
+                    <label for="Rating">Rating</label>
+                    <input id="Rating" type="number" placeholder="Rating" class="pure-input-1" name="rating" >
+                    <br>
+                   
+                    <label for="MovieGenre">Movie Genre</label>
+                    <input id="MovieGenre" type="text" placeholder="Movie Genre" class="pure-input-1" name="gene" >
+                    <br>
+                    <label for="Stock">Stock</label>
+                    <input id="Stock" type="number" placeholder="Stock" class="pure-input-1" name="stock">
+                    <br>
+                    <label for="Description">Description</label>
+                    <input id="Description" type="text" placeholder="Description" class="pure-input-1" name="descp" >
+                    <br>
+                    <label for="nos">Name of the star</label>
+                    <input id="nos" type="text" placeholder="Name of the star" class="pure-input-1" name="nos" >
+                    <br>
+                    <label for="RentalCost">Rental Cost per Day(in INR)</label>
+                    <input id="RentalCost" type="number" placeholder="Rental Cost per Day(in INR)" class="pure-input-1" name="">
+                    <br>
+
+                    <br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Save</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
 </body>
 </html>

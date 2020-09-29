@@ -1,40 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie</title>
-</head>
-<body>
-	<a href="/">Home page</a>
-	<a href="/user/logout">Logout</a>
-    <table border="1" >
-		<thead>
-			<tr>
-                <th>Id</th>
-				<th >Description</th>				
-			</tr>
-		</thead>
-		<tbody>
-            <% movies.forEach((movie)=>{%>
-            <tr>
-				<td><%=movie.id%></td>
-				<td><%=movie.description%></td>
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+	<div class="header-small">
+
+		<div class="items">
+			<h1 class="subhead">
+				<div>
+				<span>Movie Inventory</span> 
+				<span><a style="margin-left: 76%;" class="btn button-small button-secondary" href="/movies/add">Add New</a> </span>
+				</div>
+			</div>
+			</h1>
+
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th>Tape ID</th>
+					<th>Stock</th>
+					<th>Rental Cost per Day(in INR)</th>
+					<th>Store ID</th>
+					<th>Title</th>
+					<th>Director</th>
+					<th>Description</th>
+					<th>Movie Genre</th>
+					<th>Rating</th>
+					<th>Name of Star</th>
+					
+				</tr>
+				</thead>
+
+				<tbody>
+					<% movies.forEach((movie)=>{%>
+				<tr>
+					<td><%=movie.tape_id%></td>
+					<td><%=movie.stock%></td>
+					<td><%=movie.price%></td>
+					<td><%=movie.store_id%></td>
+					<td><%=movie.title%></td>
+					<td><%=movie.director%></td>
+					<td><%=movie.description%></td>
+					<td><%=movie.genre%></td>
+					<td><%=movie.rating%></td>
+					<td><%=movie.nos%></td>
+					<td>
+						<a class="btn button-small button-success" href="/movies/update/<%=movie.tape_id%>">Edit</a>
+					</td>
+					<td>
+						<form action="/movies/delete/<%=movie.tape_id%>?_method=DELETE" method="POST">
+							<button type="submit">Delete</button>
+					</td>
+					
+				</tr>
+				<%})%>
 				
-				
-				<td><a href="/movies/<%=movie.id%>/update">Update</a></td>
-				<td><form action="/movies/<%=movie.id%>?_method=DELETE" method="POST">
-					<button type="submit">Delete</button>
-					</form>
-				</td>
-			
-			</tr>
-			
-            <%})%>
-									
-		</tbody>
-	</table>
-	<a href="/addMovie">Add Movie</a>
-	<a href="/user/supervisor">Add Supervisor</a>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="navigation">
+			<div class="btn-group">
+				<a href="#" class="btn">Prev</a>
+				<a href="#" class="btn">Next</a>
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
 </body>
 </html>
+
+
+

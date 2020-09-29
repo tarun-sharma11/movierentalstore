@@ -1,16 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update movie <%=movie.id%></title>
-</head>
-<body>
-    <a href="/">Home page</a>
-    <form action="/movies/<%=movie.id%>/update?_method=PUT" method="POST">
-        <label for="description">Description :</label>
-        <input type="text" name="descp" id="description" value="<%=movie.description%>">
-        <input type="submit">
-    </form>
+<%- include("../partials/header") %>
+
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">Edit Movie Details<%=movie.title%></h1>
+
+            <form action="/movies/update/<%=movie.tape_id%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    
+                    <label for="storeid">Store ID</label>
+                    <input id="storeid" type="number" value="<%=movie.store_id%>" class="pure-input-1" name="st_id" >
+                    <br>
+                    <label for="MovieName">Movie Name</label>
+                    <input id="MovieName" type="text" value="<%=movie.title%>" class="pure-input-1" name="title">
+                    <br>
+                    <label for="Director">Director</label>
+                    <input id="Director" type="text" value="<%=movie.director%>" class="pure-input-1" name="direct" >
+                    <br>
+                    <label for="Rating">Rating</label>
+                    <input id="Rating" type="number" value="<%=movie.rating%>" class="pure-input-1" name="rating" >
+                    <br>
+                   
+                    <label for="MovieGenre">Movie Genre</label>
+                    <input id="MovieGenre" type="text" value="<%=movie.genre%>" class="pure-input-1" name="gene" >
+                    <br>
+                    <label for="Stock">Stock</label>
+                    <input id="Stock" type="number" value="<%=movie.stock%>" class="pure-input-1" name="stock">
+                    <br>
+                    <label for="Description">Description</label>
+                    <input id="Description" type="text" value="<%=movie.description%>" class="pure-input-1" name="descp" >
+                    <br>
+                    <label for="nos">Name of the star</label>
+                    <input id="nos" type="text" value="<%=movie.nos%>" class="pure-input-1" name="nos" >
+                    <br>
+                    <label for="RentalCost">Rental Cost per Day(in INR)</label>
+                    <input id="RentalCost" type="number" value="<%=movie.price%>" class="pure-input-1" name="">
+                    <br>
+
+                    <br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Save</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
 </body>
 </html>
