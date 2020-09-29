@@ -1,0 +1,66 @@
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">
+                <div>
+                <span>Rents Inventory</span> 
+                <span><a style="margin-left: 76%;" class="btn button-small button-secondary" href="/rents/add">Add New</a> </span>
+                </div>
+            </div>
+            </h1>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Rent ID</th>
+                    <th>Tape ID</th>
+                    <th>Status</th>
+                    <th>Customer ID</th>
+                    <th>Employee's SIN</th>
+                    <th>Store ID</th>
+                    <th>Time</th>
+                    
+                </tr>
+                </thead>
+
+                <tbody>
+                    <% rentals.forEach((rental)=>{ %>
+                    <tr>
+                        <td><%=rental.rental_id%></td>
+                        <td><%=rental.tape_id%></td>
+                        <td><%=rental.status%></td>
+                        <td><%=rental.cus_id%></td>
+                        <td><%=rental.sin%></td>
+                        <td><%=rental.store_id%></td>
+                        <td><%=rental.renton%></td>
+                        
+
+                        <td>
+                            <a class="btn button-small button-success" href="/rents/update/<%=rental.rental_id%>">Edit</a>
+                        </td>
+                        <td>
+                            <form action="/rents/delete/<%=rental.rental_id%>?_method=DELETE" method="POST">
+                                <button type="submit">Delete</button>
+                        </td>
+                        
+                    </tr>
+                        <% }) %>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="navigation">
+            <div class="btn-group">
+                <a href="#" class="btn">Prev</a>
+                <a href="#" class="btn">Next</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

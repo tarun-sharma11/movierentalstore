@@ -4,10 +4,30 @@ const express = require("express"),
       
 const middleware = require("../middleware");
 
+// display 
+
+router.get("/rents",async(req,res)=>{
+    try {
+        await pool.query("SELECT * FROM RENTALS",[],
+        (err,result)=>{
+            if(result){
+                res.render("./rental/rents",{rentals:result.rows});
+            }
+            if(err){
+                console.log(err);
+            }
+        })
+        
+    } catch (err) {
+        console.error(err.message);
+    }
+    
+})
+
 // add rentss
 
 router.get("/rents/add",async(req,res)=>{
-    res.render("register");
+    res.render("./rental/addrent");
 });
 
 router.post("/rents/add",async(req,res)=>{
@@ -20,7 +40,8 @@ router.post("/rents/add",async(req,res)=>{
                   console.log(err);
                 // console.log(results.row s);
                 if(results){
-                    res.json(results.rows);
+                    // res.json(results.rows);
+                    res.redirect("/rents");
                     //res.render("EJS PAGE",{errors})
                 }
                 
@@ -39,7 +60,17 @@ router.post("/rents/add",async(req,res)=>{
 // update rentss;
 
 router.get("/rents/update/:renid",async(req,res)=>{
-    res.render("register");
+    const {renid} = req.params;
+    await pool.query("SELECT * FROM RENTALS WHERE RENTAL_ID=$1",
+    [renid],
+    (err,result)=>{
+        if(result)
+        res.render("./rental/updrent",{rent:result.rows[0]});
+        // console.log(result.rows[0].rental_id)
+        if(err)
+        console.log(err);
+    })
+    
 });
 
 router.put("/rents/update/:renid",async(req,res)=>{
@@ -53,8 +84,9 @@ router.put("/rents/update/:renid",async(req,res)=>{
                       console.log(err);
                     // console.log(results.row s);
                     if(results){
-                        res.json("update");
-                        //res.render("EJS PAGE",{errors})
+                        res.redirect("/rents")
+                        // res.json("update");
+                        // res.render("EJS PAGE",{errors})
                     }
                     
                 }
@@ -75,8 +107,8 @@ router.delete("/rents/delete/:renid",async(req,res)=>{ //middleware.ifsurvisor,
         [renid],
         (err,result)=>{
             if(result)
-            res.json("Deleted the rents");
-		// res.redirect("/movies")
+            // res.json("Deleted the rents");
+		res.redirect("/rents")
         }
 		);
 		
