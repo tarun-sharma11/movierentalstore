@@ -1,0 +1,47 @@
+
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+            <div class="header-small">
+
+                <div class="items">
+                    <h1 class="subhead">New Payment</h1>
+                    
+
+                    <form action="/pays/add" method="post" novalidate autocomplete="off" class="form form-stacked">
+                        <fieldset>
+                            
+                            <br>
+                            
+                            
+                            <label for="RentID">Rent ID</label>
+                            <input id="RentID" type="number" placeholder="Rent ID" class="pure-input-1" name="rentid">
+                            <br>
+
+                            <label for="Sin">SIN</label>
+                            <input id="Sin" type="number" placeholder="SIN" class="pure-input-1" name="sin">
+                            <br>
+                            
+                            <label for="Cost">Final Cost</label>
+                            <input id="Cost" type="number" placeholder="Final Cost" class="pure-input-1" name="cost">
+                            <br>
+
+                            <label for="paytype">Payment mode</label>
+                            <input id="paytype" type="text" placeholder="Payment mode" class="pure-input-1" name="type">
+                            <br>
+
+                            <label for="Detail">Card or Cheque No.</label>
+                            <input id="Detail" type="number" placeholder="Detail" value="0" class="pure-input-1" name="detail">
+                            <br>
+                            
+                            <br><br>
+                            <input type="hidden" name="id" value="1">
+                            <button type="submit" class="btn button-success">Submit</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

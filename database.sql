@@ -42,7 +42,11 @@ INSERT INTO DISTRIBUTOR VALUES (NAMED, ADDR);
 INSERT INTO DISTRI_PHONE VALUES (NAMED,PH1);
 $$;
 
-CALL ADD_DISTRI('Blockdistributor','Koperkhairane',1234567890);
+CALL ADD_DISTRI('Asha Ward','93735 Rodriguez Keys',1234567890);
+CALL ADD_DISTRI('Ludie Hintz','151 Berta Brook',6689872617);
+CALL ADD_DISTRI('Mallory Ryan','3627 McKenzie Crossing',12209743318752);
+CALL ADD_DISTRI('Vivianne Barrows','705 Reinger Common',14450410220);
+CALL ADD_DISTRI('Orie Macejkovic','994 Savion Garden',7379585550233);
 
 CREATE OR REPLACE PROCEDURE DEL_DISTRI (NAMED character varying)
 LANGUAGE SQL
@@ -63,7 +67,7 @@ $$;
 -- *********************************STORE ENTITY*************************
 
 
-CREATE TABLE STORE (STORE_ID SMALLSERIAL PRIMARY KEY NOT NULL,SNAME VARCHAR(25),ADDRESS VARCHAR(50),DNAME VARCHAR(25));
+CREATE TABLE STORE (STORE_ID SMALLSERIAL PRIMARY KEY NOT NULL,SNAME VARCHAR(50),ADDRESS VARCHAR(50),DNAME VARCHAR(50));
 
 CREATE TABLE ST_PHONE (STORE_ID SMALLSERIAL NOT NULL,PH BIGINT);
 
@@ -81,7 +85,11 @@ INSERT INTO STORE (SNAME,ADDRESS,DNAME) VALUES (NAMES,ADDR,NAMED);
 INSERT INTO ST_PHONE (PH) VALUES (PH1);
 $$;
 
-CALL ADD_STORE('BLOCKBUSTERS','VASHI','Blockdistributor',234235436);
+CALL ADD_STORE('Monahan LLC','81408 Maryam Garden','Asha Ward',1-678-503-8003);
+CALL ADD_STORE('Waters - Rippin','06314 Hoppe Light','Ludie Hintz',380-647-0797);
+CALL ADD_STORE('Heathcote, Gutmann and Douglas','52142 Gusikowski Locks','Mallory Ryan',264-475-6846);
+CALL ADD_STORE('Champlin - Muller','509 Kyler Center','Vivianne Barrows',9665194341390);
+CALL ADD_STORE('Kiehn Group','8662 Heaney Mount','Orie Macejkovic',556-906-4284);
 
 CREATE OR REPLACE PROCEDURE DEL_STORE (ID INTEGER)
 
@@ -145,6 +153,7 @@ language plpgsql;
 
 
 CALL ADD_EMP(1010::INTEGER,'Tarun'::VARCHAR,'VASHI'::VARCHAR,'1-23-12'::VARCHAR,'1-23-12'::VARCHAR,1::SMALLINT,5000000::INTEGER,'TarunSharma@gmail.com'::VARCHAR,'$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122::BIGINT);
+
 
 
 -- *************************************************************
@@ -256,7 +265,17 @@ END IF;
 END;
 $$;
 
-CALL ADD_CUS ('DRACO',1,'KOPERKHAIRANE',9022747122);
+CALL ADD_CUS ('Ora Bernhard',1,'518 Grimes Grove',9022747122);
+CALL ADD_CUS ('Norma Streich',5,'3129 Norwood Garden',9022747122);
+CALL ADD_CUS ('Miss Antwon Welch',2,'126 Homenick Field',9022747122);
+CALL ADD_CUS ('Gayle Predovic',3,'321 Quigley Prairie',9022747122);
+CALL ADD_CUS ('Leanna Glover',4,'96802 Bailey Summit',9022747122);
+
+CALL ADD_CUS ('Paul Beier',1,'518 Grimes Grove',9022747122);
+CALL ADD_CUS ('Kay Olson',5,'3129 Norwood Garden',9022747122);
+CALL ADD_CUS ('Mr. Dolores Volkman',2,'126 Homenick Field',9022747122);
+CALL ADD_CUS ('Anissa Schumm',4,'321 Quigley Prairie',9022747122);
+CALL ADD_CUS ('Draco Malfoy',3,'96802 Bailey Summit',9022747122);
 
 CREATE OR REPLACE PROCEDURE DEL_CUS (ID integer)
 
@@ -319,7 +338,14 @@ END IF;
 END;
 $$;
 
-CALL ADD_TAPE (100,399,1,'Philosophers Stone','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Daniel Jacob Radcliffe');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Sorcerers Stone','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Daniel Jacob Radcliffe');
+CALL ADD_TAPE (100,399,5,'Harry Potter and the Chamber of Secrets','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Emma Watson');
+CALL ADD_TAPE (100,399,2,'Harry Potter and the Prisoner of Azkaban ','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Rupert Grint');
+CALL ADD_TAPE (100,399,4,'Harry Potter and the Goblet of Fire','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Richard Harris');
+CALL ADD_TAPE (100,399,3,'Harry Potter and the Order of the Phoenix','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Maggie Smith');
+CALL ADD_TAPE (100,399,2,'Harry Potter and the Half-Blood Prince','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Robbie Coltrane');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 1','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Alan Rickman');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 2','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Ralph Fiennes');
 
 
 
@@ -405,7 +431,16 @@ END IF;
 END;
 $$;
 
-CALL ADD_RENTAL(1,'PENDING',1,1010,1);
+
+
+-- CALL ADD_RENTAL(8,'PENDING',5,1010,1);
+-- CALL ADD_RENTAL(2,'PENDING',7,1010,4);
+-- CALL ADD_RENTAL(4,'PENDING',2,1010,2);
+-- CALL ADD_RENTAL(5,'PENDING',10,1010,5);
+-- CALL ADD_RENTAL(1,'PENDING',6,1010,3);
+-- CALL ADD_RENTAL(3,'PENDING',8,1010,2);
+-- CALL ADD_RENTAL(6,'PENDING',4,1010,5);
+-- CALL ADD_RENTAL(7,'PENDING',3,1010,4);
 
 -- ********************************************************
 
@@ -475,15 +510,22 @@ language plpgsql
 as $$
 declare
 EMP_EMAIL EMPLOYEES.EMAIL%TYPE;
+EMP_SIN EMPLOYEES.SIN%TYPE;
 BEGIN
 SELECT EMAIL FROM EMPLOYEES INTO EMP_EMAIL WHERE SIN=EID;
 IF FOUND THEN
+SELECT SIN FROM PAYMENTS INTO EMP_SIN WHERE RENTAL_ID=RENID;
+IF NOT FOUND THEN 
 INSERT INTO PAYMENTS (RENTAL_ID,SIN,FINAL_COST,STATUS,TYPE,DETAIL) VALUES (RENID,EID,FCOST,STA,PTYP,DEET);
+ELSE
+RAISE NOTICE 'PAYMENT ALREADY DONE';
+END IF;
 ELSE
 RAISE NOTICE 'EMPLOYEE NOT FOUND';
 END IF;
 END;
 $$;
+
 
 -- ******************************
 
@@ -510,8 +552,8 @@ CREATE OR REPLACE FUNCTION status_change()
   AS
 $$
 BEGIN
-	UPDATE RENTALS SET STATUS = 'COMPLETED' WHERE RENTAL_ID=OLD.RENTAL_ID;
-
+	UPDATE RENTALS SET STATUS = 'COMPLETED' WHERE RENTALS.RENTAL_ID=OLD.RENTAL_ID;
+  
 	RETURN NEW;
 END;
 $$;
@@ -522,3 +564,15 @@ CREATE TRIGGER change_rent_status
   FOR EACH ROW
   EXECUTE PROCEDURE status_change();
 
+
+CALL ADD_RENTAL(8,'PENDING',5,1010,1);
+CALL ADD_RENTAL(2,'PENDING',7,1010,4);
+CALL ADD_RENTAL(4,'PENDING',2,1010,2);
+CALL ADD_RENTAL(5,'PENDING',10,1010,5);
+CALL ADD_RENTAL(1,'PENDING',6,1010,3);
+CALL ADD_RENTAL(3,'PENDING',8,1010,2);
+CALL ADD_RENTAL(6,'PENDING',4,1010,5);
+CALL ADD_RENTAL(7,'PENDING',3,1010,4);
+
+
+CALL ADD_PAY(1,1010,990,'PENDING','CASH',0);

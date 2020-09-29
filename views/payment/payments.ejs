@@ -1,0 +1,64 @@
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">
+                <div>
+                <span>Payments Inventory</span> 
+                <span><a style="margin-left: 76%;" class="btn button-small button-secondary" href="/pays/add">Add New</a> </span>
+                </div>
+            </div>
+            </h1>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Rent ID</th>
+                    <th>Employee's SIN</th>
+                    <th>Final Cost</th>
+                    <th>Type</th>
+                    <th>Detail</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                    
+                </tr>
+                </thead>
+
+                <tbody>
+                    <% pays.forEach((pay)=>{ %>
+                    <tr>
+                        <td><%=pay.rental_id%></td>
+                        <td><%=pay.sin%></td>
+                        <td><%=pay.final_cost%></td>
+                        <td><%=pay.type%></td>
+                        <td><%=pay.detail%></td>
+                        
+                        <td><%=pay.status%></td>
+                        <td><%=pay.payon%></td>
+                        
+
+                        <td>
+                            <a class="btn button-small button-success" href="/pays/update/<%=pay.rental_id%>">Edit</a>
+                        </td>
+                       
+                        
+                    </tr>
+                        <% }) %>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="navigation">
+            <div class="btn-group">
+                <a href="#" class="btn">Prev</a>
+                <a href="#" class="btn">Next</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

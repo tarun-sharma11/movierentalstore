@@ -4,16 +4,31 @@ const express = require("express"),
       
 const middleware = require("../middleware");
 
+router.get("/pays",async(req,res)=>{
+    try {
+        await pool.query("SELECT * FROM PAYMENTS",[],
+        (err,results)=>{
+            if(err)
+            console.log(err)
+            if(results)
+            res.render("./payment/payments",{pays:results.rows})
+        })
+    } catch (err) {
+        
+    }
+})
+
+
 // add payss
 
 router.get("/pays/add",async(req,res)=>{
-    res.render("register");
+    res.render("./payment/addpayment");
 });
 
-router.post("/pays/add/:rentid",async(req,res)=>{
+router.post("/pays/add",async(req,res)=>{
     try {
-        const {rentid} = req.params;
-        const {sin,cost,status,type,detail} = req.body;
+        
+        const {rentid,sin,cost,status,type,detail} = req.body;
        await pool.query("CALL ADD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
             [rentid,sin,cost,status,type,detail],
             async(err,results)=>{
@@ -21,7 +36,7 @@ router.post("/pays/add/:rentid",async(req,res)=>{
                   console.log(err);
                 // console.log(results.row s);
                 if(results){
-                    res.json(results.rows);
+                    res.redirect("/pays");   
                     //res.render("EJS PAGE",{errors})
                 }
                 
@@ -40,22 +55,31 @@ router.post("/pays/add/:rentid",async(req,res)=>{
 // update payss;
 
 router.get("/pays/update/:renid",async(req,res)=>{
-    res.render("register");
+    const {renid} = req.params;
+    
+    await pool.query("SELECT * FROM PAYMENTS WHERE RENTAL_ID=$1",[renid],
+    (err,result)=>{
+        if(err)
+        console.log(err);
+        if(result)
+        res.render("./payment/updpayment",{pay:result.rows[0]})
+        
+    })
 });
 
 router.put("/pays/update/:renid",async(req,res)=>{
     try {
-        const {rentid} = req.params;
+        const {renid} = req.params;
         const {sin,cost,status,type,detail} = req.body;
-       await pool.query("CALL ADD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
-            [rentid,sin,cost,status,type,detail],
+       await pool.query("CALL UPD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
+            [renid,sin,cost,status,type,detail],
                 async(err,results)=>{
                     if(err)
                       console.log(err);
                     // console.log(results.row s);
                     if(results){
-                        res.json("update");
-                        //res.render("EJS PAGE",{errors})
+                        res.redirect("/pays"); 
+                        
                     }
                     
                 }

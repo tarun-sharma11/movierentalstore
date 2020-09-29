@@ -1,0 +1,43 @@
+
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+            <div class="header-small">
+
+                <div class="items">
+                    <h1 class="subhead">Edit Payment</h1>
+                    
+
+                    <form action="/pays/update/<%=pay.rental_id%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+                        <fieldset>
+                            
+                            <br>
+                            
+
+                            <label for="Sin">SIN</label>
+                            <input id="Sin" type="number" value="<%=pay.sin%>" class="pure-input-1" name="sin">
+                            <br>
+                            
+                            <label for="Cost">Final Cost</label>
+                            <input id="Cost" type="number" value="<%=pay.final_cost%>" class="pure-input-1" name="cost">
+                            <br>
+
+                            <label for="paytype">Payment mode</label>
+                            <input id="paytype" type="text" value="<%=pay.type%>" class="pure-input-1" name="type">
+                            <br>
+
+                            <label for="Detail">Card or Cheque No.</label>
+                            <input id="Detail" type="number" value="<%=pay.detail%>" class="pure-input-1" name="detail">
+                            <br>
+                            
+                            <br><br>
+                            <input type="hidden" name="id" value="1">
+                            <button type="submit" class="btn button-success">Submit</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

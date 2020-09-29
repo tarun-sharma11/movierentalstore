@@ -40,7 +40,7 @@ router.post("/rents/add",async(req,res)=>{
                   console.log(err);
                 // console.log(results.row s);
                 if(results){
-                    // res.json(results.rows);
+                    // res.json(results.rows);    
                     res.redirect("/rents");
                     //res.render("EJS PAGE",{errors})
                 }
