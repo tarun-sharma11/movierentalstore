@@ -1,0 +1,38 @@
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">Updating <%=store.sname%> Details </h1>
+            
+
+            <form action="/store/update/<%=store.store_id%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    <br>
+                    
+                    <label for="storeName">store Name </label>
+                    <input id="storeName" type="text" name="cusname"  class="pure-input-1" value="<%=store.sname%>" >
+                    <br>
+                    <label for="cusstr">distributor Name</label>
+                    <input id="cusstr" type="number" name="stid"  class="pure-input-1" value="<%=store.dname%>">
+                    <br>
+                    <label for="cusphno">Phone Number</label>
+                    <input id="cusphno" type="number" name="ph"  class="pure-input-1" value="<%=store.ph%>">
+                    <br>
+                    <label for="cusaddress">store Address</label>
+                    <input id="cusaddress" type="text" name="address"  class="pure-input-1" value="<%=store.address%>">
+                    <br>
+                    
+                    
+                    <br><br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

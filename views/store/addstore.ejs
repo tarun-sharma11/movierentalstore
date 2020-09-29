@@ -1,0 +1,38 @@
+<%- include("../partials/header") %>
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead"> stores Details</h1>
+            
+
+            <form action="/stores/add" method="post" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    <br>
+                    
+                    <label for="storesName">stores Name </label>
+                    <input id="storesName" type="text" name="sname" placeholder="stores Name" class="pure-input-1" value="" >
+                    <br>
+                    <label for="cusstr">Distributor Name</label>
+                    <input id="cusstr" type="Name" name="dname" placeholder="Distributor Number" class="pure-input-1" value="">
+                    <br>
+                    <label for="cusphno">Phone Number</label>
+                    <input id="cusphno" type="number" name="ph" placeholder="Phone Number" class="pure-input-1" value="">
+                    <br>
+                    <label for="cusaddress">stores Address</label>
+                    <input id="cusaddress" type="text" name="address" placeholder="stores Address" class="pure-input-1" value="">
+                    <br>
+                    
+                    
+                    <br><br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

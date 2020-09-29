@@ -7,10 +7,16 @@ const middleware = require("../middleware");
 
 router.get("/stores",async(req,res)=>{  //middleware.ifsurvisor
 	try {
-		const astores = await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID");
-		res.json(astores.rows);
+		const astores = await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID",
+		[],
+		(err,result)=>{
+			if(err)
+			console.log(err)
+			if(result)
+			res.render('./store/store',{stores:result.rows});	
+		});
 
-		// res.render('./movies/movies',{movies:allMovie.rows});
+		
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -18,9 +24,9 @@ router.get("/stores",async(req,res)=>{  //middleware.ifsurvisor
 
 // add 
 
-router.get("/stores/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/stores/add",(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/addmovie");
+		res.render("./store/addstore");
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -34,8 +40,8 @@ router.post("/stores/add",async(req,res)=>{  //,middleware.ifsurvisor
         [sname,address,dname,ph],
         (err,results)=>{
             if(results){
-            res.json(results.rows[0]);
-            // res.redirect("/movies"); 
+            // res.json(results.rows[0]);
+            res.redirect("/stores"); 
             }
             if(err){
                 console.log(err);
@@ -50,9 +56,18 @@ router.post("/stores/add",async(req,res)=>{  //,middleware.ifsurvisor
 
 // UPDATE
 
-router.get("/stores/update/:stid",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
+router.get("/stores/update/:stid",async(req,res)=>{ //,middleware.ifsurvisor
 	try {
-		res.send("./movies/update/:stid");
+		const {stid} = req.params;
+		await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID WHERE STORE.STORE_ID=$1",
+		[stid],
+		(err,result)=>{
+			if(err)
+			console.log(err)
+			if(result)
+			res.render("./store/updstore",{store:result.rows[0]});	
+		})
+		
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -67,8 +82,8 @@ router.put("/stores/update/:stid",async(req,res)=>{  //,middleware.ifsurvisor
         [stid,sname,address,dname,ph],
         (err,results)=>{
             if(results){
-            res.json("update");
-            // res.redirect("/movies"); 
+            // res.json("update");
+            res.redirect("/stores"); 
             }
             if(err){
                 console.log(err);
