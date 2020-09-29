@@ -6,12 +6,10 @@ const middleware = require("../middleware");
 
 // add supervisor
 
-router.get("/supervisor/add",middleware.ifsurvisor,(req,res)=>{
-    res.render("supervisor");
-});
-router.post("/supervisor/add",middleware.ifsurvisor,async(req,res)=>{
+
+router.post("/supervisor/add/:email",middleware.ifsurvisor,async(req,res)=>{
         try {
-            const {email} = req.body;
+            const {email} = req.params;
              
             let errors=[]
             if(!email)
@@ -20,12 +18,12 @@ router.post("/supervisor/add",middleware.ifsurvisor,async(req,res)=>{
                 res.send(errors);
             }
             else{
-                await pool.query("CALL ADD_SUPVIS($1)",[email],
+                await pool.query("CALL ADD_SUPVIS($1::VARCHAR)",[email],
                 async(err,results)=>{
                     if(err)
                     console.log(err)
                     if(results)
-                    {res.json(results.rows[0]);}
+                    {res.redirect("/employee")}
                 })
         }
         }
@@ -53,7 +51,7 @@ router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
                 console.log(err)
                 if(results)
                 // res.json("deleted");
-                res.redirect("/")
+                res.redirect("/user/logout")
             })
     }
     }
@@ -64,7 +62,7 @@ router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
 
 // display
 
-router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifsurvisor
+router.get("/employee",async(req,res)=>{  //middleware.ifsurvisor
 	try {
 		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
 		// res.json(aemployee.rows);
@@ -75,10 +73,10 @@ router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifs
 	}
 });
 
-// add employees
+// add employees 
 
 router.get("/employee/add",middleware.ifsurvisor,async(req,res)=>{
-    res.render("register");
+    res.render("./employee/addemp");
 });
 
 router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
@@ -104,7 +102,8 @@ router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
                   console.log(err);
                 // console.log(results.row s);
                 if(results){
-                    res.json("added");
+                    res.redirect("/employee");
+                    // res.json("added");
                     //res.render("EJS PAGE",{errors})
                 }
                 
@@ -122,12 +121,30 @@ router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
 
 // update employees;
 
-router.get("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{
-    res.render("register");
+router.get("/employee/update/:sin",async(req,res)=>{ //,middleware.ifsurvisor
+    try {
+        const {sin}= req.params;
+        
+        await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN WHERE EMPLOYEES.SIN=$1",
+        [sin],
+        (err,results)=>{
+                if(results)
+                res.render("./employee/editemp",{Emp:results.rows[0]});
+                  
+                // res.json(results.rows[0]);
+                if(err)
+                console.log(err);
+        });
+		
+    } catch (err) {
+        console.log(err)
+    }
+    
 });
 
-router.put("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{
+router.put("/employee/update/:sin",async(req,res)=>{ //,middleware.ifsurvisor
     try {
+        console.log("put success");
         const {sin} = req.params;
         const {name,address,dob,doj,stid,sal,email,password,password2,ph} = req.body;
         let errors = []
@@ -143,14 +160,14 @@ router.put("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{
         else{
             const hashedpassword = await bcrypt.hash(password,10);
             
-            await pool.query("CALL UPD_EMP($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+            await pool.query("CALL UPD_EMP($1::INTEGER,$2::VARCHAR,$3::VARCHAR,$4::VARCHAR,$5::VARCHAR,$6::SMALLINT,$7::INTEGER,$8::VARCHAR,$9::VARCHAR,$10::BIGINT)",
             [sin,name,address,dob,doj,stid,sal,email,hashedpassword,ph],
             async(err,results)=>{
                 if(err)
                 console.log(err);
                 // console.log(results.rows);
                 if(results){
-                    res.json(results.rows[0]);
+                    res.redirect("/employee");
                     //res.render("EJS PAGE",{errors})
                 }
                 

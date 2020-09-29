@@ -1,0 +1,55 @@
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">Editing details of <%=Emp.ename%></h1>
+            
+
+            <form action="/employee/update/<%=Emp.sin%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    <br>
+                    
+                    <label for="EmployeeName">Employee Name </label>
+                    <input id="EmployeeName" type="text" value="<%=Emp.ename%>" class="pure-input-1" name="name"  >
+                    <br>
+                    
+                    <label for="empphno">Phone Number</label>
+                    <input id="empphno" type="number" value="<%=parseInt(Emp.ph)%>" class="pure-input-1" name="ph" >
+                    <br>
+                    <label for="empaddress">Employee Address</label>
+                    <input id="empaddress" type="text" value="<%=Emp.address%>" class="pure-input-1" name="address" >
+                    <br>
+                    <label for="Hre Date">Hire Date (YYYY-MM-DD)</label>
+                    <input id="hireDate" type="text" value="<%=Emp.doj%>" class="pure-input-1" name="doj"  >
+                    <br>
+                    <label for="brt Date">Birth Date (YYYY-MM-DD)</label>
+                    <input id="birthDate" type="text" value="<%=Emp.dob%>" class="pure-input-1" name="dob"  >
+                    <br>
+                    <label for="storeno">Store Number</label>
+                    <input id="storeno" type="number" value="<%=parseInt(Emp.store_id)%>" class="pure-input-1" name="stid" >
+                    <br>
+                    <label for="salary">Salary</label>
+                    <input id="salary" type="number" value="<%=parseInt(Emp.salary)%>" class="pure-input-1" name="sal" >
+                    <br>
+                    <label for="email">Email</label>
+                    <input id="email" type="email" value="<%=Emp.email%>" class="pure-input-1" name="email" >
+                    <br>
+                    <label for="pass">Password</label>
+                    <input id="pass" type="password" value="" class="pure-input-1" name="password" >
+                    <br>
+                    <label for="pass">Re-enter the Password</label>
+                    <input id="pass" type="password" value="" class="pure-input-1" name="password2" >
+                    <br>
+                    
+                    <br><br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

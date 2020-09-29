@@ -53,8 +53,8 @@ router.post("/distributor/add",middleware.ifsurvisor,async(req,res)=>{  //
 router.get("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {dname}= req.params;
-		const aDistributor = await pool.query("SELECT address,phone FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME WHERE DISTRIBUTOR.DNAME=$1",[dname]);
-		res.render("./distributor/updatedistributor",{distributor:aDistributor.rows,dname:dname});
+		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME WHERE DISTRIBUTOR.DNAME=$1",[dname]);
+		res.render("./distributor/updatedistributor",{distributor:aDistributor.rows[0]});
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -88,7 +88,7 @@ router.put("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{ 
 router.delete("/distributor/delete/:dname",middleware.ifsurvisor,async(req,res)=>{ //
 	try {
 		const {dname} = (req.params);
-		console.log(dname);
+		
 		await pool.query("CALL DEL_DISTRI($1::VARCHAR)",
         [dname],
         (err,result)=>{

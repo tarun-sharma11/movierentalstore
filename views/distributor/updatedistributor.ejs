@@ -3,10 +3,10 @@
     <div class="header-small">
 
         <div class="items">
-            <h1 class="subhead">Update Distributor <%=dname%> Details</h1>
+            <h1 class="subhead">Update Distributor <%=distributor.dname%> Details</h1>
             
 
-            <form action="/distributor/update/<%=dname%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+            <form action="/distributor/update/<%=distributor.dname%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
                 <fieldset>
                     <br>
                     
@@ -14,10 +14,10 @@
                     
                     
                     <label for="empphno">Phone Number</label>
-                    <input id="empphno" type="number" name="ph" placeholder="Phone Number" class="pure-input-1" value="<%=distributor.address%>">
+                    <input id="empphno" type="number" name="ph"  class="pure-input-1" value="<%=distributor.phone%>">
                     <br>
                     <label for="empaddress">Distributor Address</label>
-                    <input id="empaddress" type="text" name="address" placeholder="Distributor Address" class="pure-input-1" value="<%=distributor.phone%>">
+                    <input id="empaddress" type="text" name="address"  class="pure-input-1" value="<%=distributor.address%>">
                     <br>
                     
                     
