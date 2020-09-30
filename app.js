@@ -5,8 +5,10 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
+const router = express.Router();
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(
@@ -16,9 +18,11 @@ app.use(
 		saveUninitialized: false
 	})
 );
+router.use(express.static(__dirname+"./public/"));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set("view engine","ejs");
+app.use(express.static("public"));
 app.use(methodOverride('_method'));
 
 // Seeding
@@ -32,6 +36,7 @@ const rentRouters = require("./routes/rents");
 const payRouters = require("./routes/payments");
 const customRouters = require("./routes/customers");
 const storeRouters = require("./routes/stores");
+
 app.use(movieRouters);
 app.use(loginRouters);
 app.use(distriRouters); 
