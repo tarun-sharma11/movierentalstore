@@ -65,7 +65,8 @@ router.get("/stores/update/:stid",async(req,res)=>{ //,middleware.ifsurvisor
 			if(err)
 			console.log(err)
 			if(result)
-			res.render("./store/updstore",{store:result.rows[0]});	
+			res.render("./store/updstore",{store:result.rows[0]});
+			// res.json(result.rows[0]);	
 		})
 		
 	} catch (err) {

@@ -6,15 +6,15 @@
             <h1 class="subhead">Updating <%=store.sname%> Details </h1>
             
 
-            <form action="/store/update/<%=store.store_id%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
+            <form action="/stores/update/<%=store.store_id%>?_method=PUT" method="post" novalidate autocomplete="off" class="form form-stacked">
                 <fieldset>
                     <br>
                     
                     <label for="storeName">store Name </label>
-                    <input id="storeName" type="text" name="cusname"  class="pure-input-1" value="<%=store.sname%>" >
+                    <input id="storeName" type="text" name="sname"  class="pure-input-1" value="<%=store.sname%>" >
                     <br>
                     <label for="cusstr">distributor Name</label>
-                    <input id="cusstr" type="number" name="stid"  class="pure-input-1" value="<%=store.dname%>">
+                    <input id="cusstr" type="text" name="dname"  class="pure-input-1" value="<%=store.dname%>">
                     <br>
                     <label for="cusphno">Phone Number</label>
                     <input id="cusphno" type="number" name="ph"  class="pure-input-1" value="<%=store.ph%>">
