@@ -3,7 +3,7 @@ const express = require("express"),
 const {pool} = require("../db");
 const middleware = require("../middleware");
   
-router.post("/movies/add",async(req,res)=>{  //,middleware.ifsurvisor
+router.post("/movies/add",middleware.ifsurvisor,async(req,res)=>{  //
 	try {
 		const {stock,price,st_id,title,direct,descp,gene,rating,nos} = req.body;
 		
@@ -21,14 +21,14 @@ router.post("/movies/add",async(req,res)=>{  //,middleware.ifsurvisor
 		console.error(err.message);
 	}
 });
-router.get("/movies/add",(req,res)=>{ //,middleware.ifsurvisor
+router.get("/movies/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		res.render("./movies/addmovie");
 	} catch (err) {
 		console.error(err.message);
 	}
 });
-router.get("/movies",async(req,res)=>{  //,middleware.ifAuthenticated
+router.get("/movies",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifAuthenticated
 	try {
 		const allMovie = await pool.query("SELECT * FROM TAPES INNER JOIN MOVIES ON TAPES.TAPE_ID=MOVIES.TAPE_ID");
 
@@ -39,7 +39,7 @@ router.get("/movies",async(req,res)=>{  //,middleware.ifAuthenticated
 	}
 });
 
-router.get("/movies/update/:id",async(req,res)=>{  //middleware.ifsurvisor,
+router.get("/movies/update/:id",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifsurvisor,
 	try {
 
 		
@@ -57,7 +57,7 @@ router.get("/movies/update/:id",async(req,res)=>{  //middleware.ifsurvisor,
 	
 });
 
-router.put("/movies/update/:id",async(req,res)=>{ //middleware.ifsurvisor,
+router.put("/movies/update/:id",middleware.ifsurvisor,async(req,res)=>{ //middleware.ifsurvisor,
 	try {
 		const {stock,price,st_id,title,direct,descp,gene,rating,nos} = req.body;
 		const {id} = req.params;
@@ -77,11 +77,11 @@ router.put("/movies/update/:id",async(req,res)=>{ //middleware.ifsurvisor,
 	}
 });
 
-router.delete("/movies/delete/:id",async(req,res)=>{ //middleware.ifsurvisor,
+router.delete("/movies/delete/:id",middleware.ifsurvisor,async(req,res)=>{ //middleware.ifsurvisor,
 	try {
 		const {id} = (req.params);
 		
-		await pool.query("CALL DEL_TAPE($1)",
+		await pool.query("CALL DEL_TAPE($1::INTEGER)",
 		[id],
 		(err,result)=>{
 			if(err)

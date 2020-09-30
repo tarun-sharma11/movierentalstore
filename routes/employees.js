@@ -62,7 +62,7 @@ router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
 
 // display
 
-router.get("/employee",async(req,res)=>{  //middleware.ifsurvisor
+router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifsurvisor
 	try {
 		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
 		// res.json(aemployee.rows);
@@ -121,7 +121,7 @@ router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
 
 // update employees;
 
-router.get("/employee/update/:sin",async(req,res)=>{ //,middleware.ifsurvisor
+router.get("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
     try {
         const {sin}= req.params;
         
@@ -142,7 +142,7 @@ router.get("/employee/update/:sin",async(req,res)=>{ //,middleware.ifsurvisor
     
 });
 
-router.put("/employee/update/:sin",async(req,res)=>{ //,middleware.ifsurvisor
+router.put("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
     try {
         console.log("put success");
         const {sin} = req.params;

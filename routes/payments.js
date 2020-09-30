@@ -4,7 +4,7 @@ const express = require("express"),
       
 const middleware = require("../middleware");
 
-router.get("/pays",async(req,res)=>{
+router.get("/pays",middleware.ifAuthenticated,async(req,res)=>{
     try {
         await pool.query("SELECT * FROM PAYMENTS",[],
         (err,results)=>{
@@ -21,11 +21,11 @@ router.get("/pays",async(req,res)=>{
 
 // add payss
 
-router.get("/pays/add",async(req,res)=>{
+router.get("/pays/add",middleware.ifAuthenticated,async(req,res)=>{
     res.render("./payment/addpayment");
 });
 
-router.post("/pays/add",async(req,res)=>{
+router.post("/pays/add",middleware.ifAuthenticated,async(req,res)=>{
     try {
         
         const {rentid,sin,cost,status,type,detail} = req.body;
@@ -54,7 +54,7 @@ router.post("/pays/add",async(req,res)=>{
 
 // update payss;
 
-router.get("/pays/update/:renid",async(req,res)=>{
+router.get("/pays/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     const {renid} = req.params;
     
     await pool.query("SELECT * FROM PAYMENTS WHERE RENTAL_ID=$1",[renid],
@@ -67,7 +67,7 @@ router.get("/pays/update/:renid",async(req,res)=>{
     })
 });
 
-router.put("/pays/update/:renid",async(req,res)=>{
+router.put("/pays/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     try {
         const {renid} = req.params;
         const {sin,cost,status,type,detail} = req.body;

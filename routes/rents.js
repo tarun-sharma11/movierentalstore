@@ -6,7 +6,7 @@ const middleware = require("../middleware");
 
 // display 
 
-router.get("/rents",async(req,res)=>{
+router.get("/rents",middleware.ifAuthenticated,async(req,res)=>{
     try {
         await pool.query("SELECT * FROM RENTALS",[],
         (err,result)=>{
@@ -26,11 +26,11 @@ router.get("/rents",async(req,res)=>{
 
 // add rentss
 
-router.get("/rents/add",async(req,res)=>{
+router.get("/rents/add",middleware.ifAuthenticated,async(req,res)=>{
     res.render("./rental/addrent");
 });
 
-router.post("/rents/add",async(req,res)=>{
+router.post("/rents/add",middleware.ifAuthenticated,async(req,res)=>{
     try {
         const {sin,tpid,cusid,stid} = req.body;
        await pool.query("CALL ADD_RENTAL($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::INTEGER,$5::INTEGER)",
@@ -59,7 +59,7 @@ router.post("/rents/add",async(req,res)=>{
 
 // update rentss;
 
-router.get("/rents/update/:renid",async(req,res)=>{
+router.get("/rents/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     const {renid} = req.params;
     await pool.query("SELECT * FROM RENTALS WHERE RENTAL_ID=$1",
     [renid],
@@ -73,7 +73,7 @@ router.get("/rents/update/:renid",async(req,res)=>{
     
 });
 
-router.put("/rents/update/:renid",async(req,res)=>{
+router.put("/rents/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     try {
             const {renid}=req.params;
             const {sin,tpid,cusid,stid} = req.body;
@@ -99,21 +99,5 @@ router.put("/rents/update/:renid",async(req,res)=>{
     }
 });
 
-router.delete("/rents/delete/:renid",async(req,res)=>{ //middleware.ifsurvisor,
-	try {
-		const {renid} = (req.params);
-		
-		await pool.query("CALL DEL_RENTAL($1)",
-        [renid],
-        (err,result)=>{
-            if(result)
-            // res.json("Deleted the rents");
-		res.redirect("/rents")
-        }
-		);
-		
-	} catch (err) {
-		console.error(err.message);
-	}
-});
+
 module.exports = router;

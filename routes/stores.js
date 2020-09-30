@@ -5,7 +5,7 @@ const middleware = require("../middleware");
 
 // display
 
-router.get("/stores",async(req,res)=>{  //middleware.ifsurvisor
+router.get("/stores",middleware.ifAuthenticated,async(req,res)=>{  //middleware.ifsurvisor
 	try {
 		const astores = await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID",
 		[],
@@ -24,7 +24,7 @@ router.get("/stores",async(req,res)=>{  //middleware.ifsurvisor
 
 // add 
 
-router.get("/stores/add",(req,res)=>{ //,middleware.ifsurvisor
+router.get("/stores/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		res.render("./store/addstore");
 	} catch (err) {
@@ -32,7 +32,7 @@ router.get("/stores/add",(req,res)=>{ //,middleware.ifsurvisor
 	}
 });
 
-router.post("/stores/add",async(req,res)=>{  //,middleware.ifsurvisor
+router.post("/stores/add",middleware.ifsurvisor,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
 		const {sname,address,dname,ph} = req.body;
 		
@@ -56,7 +56,7 @@ router.post("/stores/add",async(req,res)=>{  //,middleware.ifsurvisor
 
 // UPDATE
 
-router.get("/stores/update/:stid",async(req,res)=>{ //,middleware.ifsurvisor
+router.get("/stores/update/:stid",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {stid} = req.params;
 		await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID WHERE STORE.STORE_ID=$1",
@@ -74,7 +74,7 @@ router.get("/stores/update/:stid",async(req,res)=>{ //,middleware.ifsurvisor
 	}
 });
  
-router.put("/stores/update/:stid",async(req,res)=>{  //,middleware.ifsurvisor
+router.put("/stores/update/:stid",middleware.ifsurvisor,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
         const {stid}= req.params;
 		const {sname,address,dname,ph} = req.body;

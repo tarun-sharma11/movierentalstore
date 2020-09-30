@@ -5,7 +5,7 @@ const middleware = require("../middleware");
 
 // display
 
-router.get("/distributor",async(req,res)=>{  //middleware.ifsurvisor
+router.get("/distributor",middleware.ifAuthenticated,async(req,res)=>{  //middleware.ifsurvisor
 	try {
 		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME");
 		// res.json(aDistributor.rows);

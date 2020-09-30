@@ -5,9 +5,9 @@ const session = require("express-session");
 const passport = require("passport");
 const middleware = require("../middleware")
 router.get("/",(req,res)=>{
-    res.render("homepage");
+    res.render("login");
 });
-router.get("/dashboard",(req,res)=>{
+router.get("/dashboard",middleware.ifAuthenticated,(req,res)=>{
     res.render("dashboard");
 })
 

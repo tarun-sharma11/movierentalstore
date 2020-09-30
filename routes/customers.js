@@ -5,7 +5,7 @@ const middleware = require("../middleware");
 
 // display
 
-router.get("/customer",async(req,res)=>{  //middleware.ifsurvisor
+router.get("/customer",middleware.ifAuthenticated,async(req,res)=>{  
 	try {
 		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID",
 		[],
@@ -26,7 +26,7 @@ router.get("/customer",async(req,res)=>{  //middleware.ifsurvisor
 
 // add  
 
-router.get("/customer/add",(req,res)=>{ //,middleware.ifsurvisor
+router.get("/customer/add",middleware.ifAuthenticated,(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		res.render("./customer/addcustomer");
 	} catch (err) {
@@ -34,7 +34,7 @@ router.get("/customer/add",(req,res)=>{ //,middleware.ifsurvisor
 	}
 });
 
-router.post("/customer/add",async(req,res)=>{  //,middleware.ifsurvisor
+router.post("/customer/add",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
 		const {cusname,stid,address,ph} = req.body;
 		
@@ -58,7 +58,7 @@ router.post("/customer/add",async(req,res)=>{  //,middleware.ifsurvisor
 
 // UPDATE
 
-router.get("/customer/update/:id",async(req,res)=>{ //,middleware.ifsurvisor
+router.get("/customer/update/:id",middleware.ifAuthenticated,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {id} = req.params;
 		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID WHERE CUSTOMERS.CUS_ID=$1",
@@ -76,7 +76,7 @@ router.get("/customer/update/:id",async(req,res)=>{ //,middleware.ifsurvisor
 	}
 });
 
-router.put("/customer/update/:id",async(req,res)=>{  //,middleware.ifsurvisor
+router.put("/customer/update/:id",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
         const {id}= req.params;
 		const {cusname,stid,address,ph} = req.body;
@@ -101,7 +101,7 @@ router.put("/customer/update/:id",async(req,res)=>{  //,middleware.ifsurvisor
 
 // delete
 
-router.delete("/customer/delete/:id",async(req,res)=>{ //middleware.ifsurvisor,
+router.delete("/customer/delete/:id",middleware.ifAuthenticated,async(req,res)=>{ //middleware.ifsurvisor,
 	try {
 		const {id} = (req.params);
 		
