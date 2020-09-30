@@ -98,6 +98,6 @@ router.put("/rents/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
        console.error(err.message);
     }
 });
-
+   
 
 module.exports = router;

@@ -1,3 +1,4 @@
+<%- include("../partials/header") %>
 <div class="pureent hamdash1 fillin-val">
     <div class="header-small">
 
@@ -14,7 +15,7 @@
                     <br>
                     
                     <label for="empphno">Phone Number</label>
-                    <input id="empphno" type="number" value="<%=parseInt(Emp.ph)%>" class="pure-input-1" name="ph" >
+                    <input id="empphno" type="number" value="<%=(Emp.ph)%>" class="pure-input-1" name="ph" >
                     <br>
                     <label for="empaddress">Employee Address</label>
                     <input id="empaddress" type="text" value="<%=Emp.address%>" class="pure-input-1" name="address" >
@@ -26,10 +27,10 @@
                     <input id="birthDate" type="text" value="<%=Emp.dob%>" class="pure-input-1" name="dob"  >
                     <br>
                     <label for="storeno">Store Number</label>
-                    <input id="storeno" type="number" value="<%=parseInt(Emp.store_id)%>" class="pure-input-1" name="stid" >
+                    <input id="storeno" type="number" value="<%=(Emp.store_id)%>" class="pure-input-1" name="stid" >
                     <br>
                     <label for="salary">Salary</label>
-                    <input id="salary" type="number" value="<%=parseInt(Emp.salary)%>" class="pure-input-1" name="sal" >
+                    <input id="salary" type="number" value="<%=(Emp.salary)%>" class="pure-input-1" name="sal" >
                     <br>
                     <label for="email">Email</label>
                     <input id="email" type="email" value="<%=Emp.email%>" class="pure-input-1" name="email" >
