@@ -3,7 +3,7 @@ const express = require("express"),
       const {pool} = require("../db");
       
 const middleware = require("../middleware");
-
+ 
 // display 
 
 router.get("/rents",middleware.ifAuthenticated,async(req,res)=>{

@@ -4,6 +4,7 @@ const express = require("express"),
       const bcrypt = require("bcrypt");
 const middleware = require("../middleware");
 
+
 // add supervisor
 
 
@@ -62,17 +63,17 @@ router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
 
 // display
 
-router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  //middleware.ifsurvisor
+router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  
 	try {
 		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
-		// res.json(aemployee.rows);
-        const asup = await pool.query("SELECT * FROM SUPERVISORS");
-		res.render('./employee/employees',{employees:aemployee.rows,supervise:asup.rows});
+		const asup = await pool.query("SELECT * FROM SUPERVISORS");
+        res.render('./employee/employees',{employees:aemployee.rows,supervise:asup.rows});
+        // res.json((aemployee.rows[0].dob));
 	} catch (err) {
 		console.error(err.message);
 	}
 });
-
+    
 // add employees 
 
 router.get("/employee/add",middleware.ifsurvisor,async(req,res)=>{
@@ -92,10 +93,12 @@ router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
         if(errors.length > 0){
             res.send("Error");
         }
+    
         else{    
+            
             const hashedpassword = await bcrypt.hash(password,10);
             // console.log(hashedpassword);
-            await pool.query("CALL ADD_EMP($1::INTEGER,$2::VARCHAR,$3::VARCHAR,$4::VARCHAR,$5::VARCHAR,$6::SMALLINT,$7::INTEGER,$8::VARCHAR,$9::VARCHAR,$10::BIGINT)",
+            await pool.query("CALL ADD_EMP($1::INTEGER,$2::VARCHAR,$3::VARCHAR,$4::DATE,$5::DATE,$6::SMALLINT,$7::INTEGER,$8::VARCHAR,$9::VARCHAR,$10::BIGINT)",
             [sin,name,address,dob,doj,stid,sal,email,hashedpassword,ph],
             async(err,results)=>{
                 if(err)
@@ -124,14 +127,15 @@ router.post("/employee/add",middleware.ifsurvisor,async(req,res)=>{
 router.get("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
     try {
         const {sin}= req.params;
-        
+        const ifsuper = await pool.query("SELECT * FROM SUPERVISORS WHERE SIN=$1",[sin]);
+
         await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN WHERE EMPLOYEES.SIN=$1",
         [sin],
         (err,results)=>{
                 if(results)
-                res.render("./employee/editemp",{Emp:results.rows[0]});
+                res.render("./employee/editemp",{Emp:results.rows[0],sup:ifsuper.rows[0]});
                   
-                // res.json(results.rows[0]);
+                // res.json(ifsuper.rows[0]);
                 if(err)
                 console.log(err);
         });
@@ -160,7 +164,7 @@ router.put("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{ //,mi
         else{
             const hashedpassword = await bcrypt.hash(password,10);
             
-            await pool.query("CALL UPD_EMP($1::INTEGER,$2::VARCHAR,$3::VARCHAR,$4::VARCHAR,$5::VARCHAR,$6::SMALLINT,$7::INTEGER,$8::VARCHAR,$9::VARCHAR,$10::BIGINT)",
+            await pool.query("CALL UPD_EMP($1::INTEGER,$2::VARCHAR,$3::VARCHAR,$4::DATE,$5::DATE,$6::SMALLINT,$7::INTEGER,$8::VARCHAR,$9::VARCHAR,$10::BIGINT)",
             [sin,name,address,dob,doj,stid,sal,email,hashedpassword,ph],
             async(err,results)=>{
                 if(err)
@@ -198,7 +202,7 @@ router.delete("/employee/delete/:sin",middleware.ifsurvisor,async(req,res)=>{ //
 		
 	} catch (err) {
 		console.error(err.message);
-	}
+	}        
 });
-
+    
 module.exports = router;

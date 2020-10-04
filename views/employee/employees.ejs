@@ -6,7 +6,7 @@
             <h1 class="subhead">
                 <div>
                 <span>Employees</span> 
-                <span><a style="margin-left: 80%;" class="btn button-small button-secondary" href="/employee/add">Add New</a></span> 
+                <span><a style="margin-left: 91.5%;" class="btn button-small button-secondary" href="/employee/add">Add New</a></span> 
                 </div>
             </div>
             </h1>
@@ -39,37 +39,8 @@
                     <td><%= employee.doj%></td>
                     <td><%= employee.dob%></td>
                     <td><%= employee.address%></td>
-                    <td><a href="/employee/update/<%=employee.sin%>">Update</a></td>
-                    <td>
-                        <form action="/employee/delete/<%=employee.sin%>?_method=DELETE" method="POST">
-                        <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                    <% supervise.forEach((sup)=>{%>
-                        <% if(sup.sin==employee.sin){%>
-                        
-                            <form action="/supervisor/delete/<%=employee.sin%>?_method=DELETE" method="POST">
-                                <button type="submit">Remove Supervisor</button>
-                                </form>
-                        
-                    <%}%>
+                    <td><a class="btn button-success" href="/employee/update/<%=employee.sin%>">Update</a></td>
                    
-                    <%})%>
-                    <% supervise.forEach((sup)=>{%>
-                        <% if(sup.sin!=employee.sin){%>
-                            
-                                <form action="/supervisor/add/<%=employee.email%>" method="POST">
-                                    <button type="submit">Add Supervisor</button>
-                                    </form>
-                            
-                        <%}%>
-                        
-                   
-                    <%})%>
-
-                </td>
-                    
                 </tr>
                 <%})%>
            

@@ -21,10 +21,10 @@
                     <input id="empaddress" type="text" value="<%=Emp.address%>" class="pure-input-1" name="address" >
                     <br>
                     <label for="Hre Date">Hire Date (YYYY-MM-DD)</label>
-                    <input id="hireDate" type="text" value="<%=Emp.doj%>" class="pure-input-1" name="doj"  >
+                    <input id="hireDate" type="text" value="<%=(Emp.doj)%>" class="pure-input-1" name="doj"  >
                     <br>
                     <label for="brt Date">Birth Date (YYYY-MM-DD)</label>
-                    <input id="birthDate" type="text" value="<%=Emp.dob%>" class="pure-input-1" name="dob"  >
+                    <input id="birthDate" type="text " value="<%=Emp.dob%>" class="pure-input-1" name="dob"  >
                     <br>
                     <label for="storeno">Store Number</label>
                     <input id="storeno" type="number" value="<%=(Emp.store_id)%>" class="pure-input-1" name="stid" >
@@ -48,7 +48,21 @@
                 </fieldset>
             </form>
         </div>
-
+        <form action="/employee/delete/<%=Emp.sin%>?_method=DELETE" method="POST">
+            <button class="btn button-success" type="submit">Delete</button>
+            </form>
+            <br>
+            <% if(sup){%>
+            <form action="/supervisor/delete/<%=Emp.sin%>?_method=DELETE" method="POST">
+                <button class="btn button-success" type="submit">Remove Supervisor</button>
+                </form>
+                <br>
+            <%}%>   
+            <% if(!sup){%>
+                <form action="/supervisor/add/<%=Emp.email%>" method="POST">
+                    <button class="btn button-success" type="submit">Add Supervisor</button>
+                    </form>
+                    <%}%>                      
     </div>
 </div>
 </div>

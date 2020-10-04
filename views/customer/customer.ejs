@@ -7,7 +7,7 @@
                     <h1 class="subhead">
                         Customer
                          
-                         <span><a style="margin-left: 76%;" class="btn button-small button-secondary" href="/customer/add">Add customer</a> </span>
+                         <span><a style="margin-left: 90%;" class="btn button-small button-secondary" href="/customer/add">Add customer</a> </span>
                         </div>
                     </div>
                     </h1>
@@ -34,7 +34,7 @@
                                     <td><%=customer.store_id%></td>
                                     
                                     
-                                    <td><a href="/customer/update/<%=customer.cus_id%>">Update</a></td>
+                                    <td><a class="btn button-success" href="/customer/update/<%=customer.cus_id%>">Update</a></td>
                                     <td>
                                         <form action="/customer/delete/<%=customer.cus_id%>?_method=DELETE" method="POST">
                                         <button type="submit">Delete</button>
