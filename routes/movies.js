@@ -30,7 +30,7 @@ router.get("/movies/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurv
 });
 router.get("/movies",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifAuthenticated
 	try {
-		const allMovie = await pool.query("SELECT * FROM TAPES INNER JOIN MOVIES ON TAPES.TAPE_ID=MOVIES.TAPE_ID");
+		const allMovie = await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES");
 
 
 		res.render('./movies/movies',{movies:allMovie.rows});
@@ -44,7 +44,7 @@ router.get("/movies/update/:id",middleware.ifsurvisor,async(req,res)=>{  //middl
 
 		
 		const {id} = req.params;
-		const aMovie = await pool.query("SELECT * FROM TAPES INNER JOIN MOVIES ON TAPES.TAPE_ID=MOVIES.TAPE_ID WHERE TAPES.TAPE_ID=$1",
+		const aMovie = await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES WHERE TAPES.TAPE_ID=$1",
 		[id]
 		);
 		// res.json(aMovie.rows[0]);

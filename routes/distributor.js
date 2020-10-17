@@ -7,7 +7,7 @@ const middleware = require("../middleware");
 
 router.get("/distributor",middleware.ifAuthenticated,async(req,res)=>{  //middleware.ifsurvisor
 	try {
-		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME");
+		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR NATURAL JOIN DISTRI_PHONE");
 		// res.json(aDistributor.rows);
 
 		res.render('./distributor/distributor',{distributors:aDistributor.rows});
@@ -53,7 +53,7 @@ router.post("/distributor/add",middleware.ifsurvisor,async(req,res)=>{  //
 router.get("/distributor/update/:dname",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {dname}= req.params;
-		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR INNER JOIN DISTRI_PHONE ON DISTRIBUTOR.DNAME=DISTRI_PHONE.DNAME WHERE DISTRIBUTOR.DNAME=$1",[dname]);
+		const aDistributor = await pool.query("SELECT * FROM DISTRIBUTOR NATURAL JOIN DISTRI_PHONE WHERE DISTRIBUTOR.DNAME=$1",[dname]);
 		res.render("./distributor/updatedistributor",{distributor:aDistributor.rows[0]});
 	} catch (err) {
 		console.error(err.message);

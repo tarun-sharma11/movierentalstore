@@ -65,7 +65,7 @@ router.delete("/supervisor/delete/:sin",middleware.ifsurvisor,async(req,res)=>{
 
 router.get("/employee",middleware.ifsurvisor,async(req,res)=>{  
 	try {
-		const aemployee = await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN");
+		const aemployee = await pool.query("SELECT * FROM EMPLOYEES NATURAL JOIN EM_PHONE ");
 		const asup = await pool.query("SELECT * FROM SUPERVISORS");
         res.render('./employee/employees',{employees:aemployee.rows,supervise:asup.rows});
         // res.json((aemployee.rows[0].dob));
@@ -129,7 +129,7 @@ router.get("/employee/update/:sin",middleware.ifsurvisor,async(req,res)=>{ //,mi
         const {sin}= req.params;
         const ifsuper = await pool.query("SELECT * FROM SUPERVISORS WHERE SIN=$1",[sin]);
 
-        await pool.query("SELECT * FROM EMPLOYEES INNER JOIN EM_PHONE ON EMPLOYEES.SIN=EM_PHONE.SIN WHERE EMPLOYEES.SIN=$1",
+        await pool.query("SELECT * FROM EMPLOYEES NATURAL JOIN EM_PHONE  WHERE EMPLOYEES.SIN=$1",
         [sin],
         (err,results)=>{
                 if(results)

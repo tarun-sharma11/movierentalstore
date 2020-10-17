@@ -7,7 +7,7 @@ const middleware = require("../middleware");
 
 router.get("/customer",middleware.ifAuthenticated,async(req,res)=>{  
 	try {
-		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID",
+		await pool.query("SELECT * FROM CUSTOMERS NATURAL JOIN CUS_PHONE ",
 		[],
 		(err,results)=>{
 			if(err)
@@ -61,7 +61,7 @@ router.post("/customer/add",middleware.ifAuthenticated,async(req,res)=>{  //,mid
 router.get("/customer/update/:id",middleware.ifAuthenticated,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {id} = req.params;
-		await pool.query("SELECT * FROM CUSTOMERS INNER JOIN CUS_PHONE ON CUSTOMERS.CUS_ID=CUS_PHONE.CUS_ID WHERE CUSTOMERS.CUS_ID=$1",
+		await pool.query("SELECT * FROM CUSTOMERS NATURAL JOIN CUS_PHONE WHERE CUSTOMERS.CUS_ID=$1",
 		[id],
 		(err,result)=>{
 			if(err)

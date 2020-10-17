@@ -7,7 +7,7 @@ const middleware = require("../middleware");
 
 router.get("/stores",middleware.ifAuthenticated,async(req,res)=>{  //middleware.ifsurvisor
 	try {
-		const astores = await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID",
+		await pool.query("SELECT * FROM STORE NATURAL JOIN ST_PHONE ",
 		[],
 		(err,result)=>{
 			if(err)
@@ -59,7 +59,7 @@ router.post("/stores/add",middleware.ifsurvisor,async(req,res)=>{  //,middleware
 router.get("/stores/update/:stid",middleware.ifsurvisor,async(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		const {stid} = req.params;
-		await pool.query("SELECT * FROM STORE INNER JOIN ST_PHONE ON STORE.STORE_ID=ST_PHONE.STORE_ID WHERE STORE.STORE_ID=$1",
+		await pool.query("SELECT * FROM STORE NATURAL JOIN ST_PHONE  WHERE STORE.STORE_ID=$1",
 		[stid],
 		(err,result)=>{
 			if(err)
