@@ -28,8 +28,9 @@ router.get("/pays/add",middleware.ifAuthenticated,async(req,res)=>{
 router.post("/pays/add",middleware.ifAuthenticated,async(req,res)=>{
     try {
         
-        const {rentid,sin,cost,status,type,detail} = req.body;
-       await pool.query("CALL ADD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
+        const {rentid,cost,status,type,detail} = req.body;
+        const {sin} = req.user;
+        await pool.query("CALL ADD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
             [rentid,sin,cost,status,type,detail],
             async(err,results)=>{
                 if(err)
@@ -70,7 +71,8 @@ router.get("/pays/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
 router.put("/pays/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     try {
         const {renid} = req.params;
-        const {sin,cost,status,type,detail} = req.body;
+        const {sin} = req.user;
+        const {cost,status,type,detail} = req.body;
        await pool.query("CALL UPD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
             [renid,sin,cost,status,type,detail],
                 async(err,results)=>{

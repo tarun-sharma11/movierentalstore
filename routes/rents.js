@@ -32,9 +32,10 @@ router.get("/rents/add",middleware.ifAuthenticated,async(req,res)=>{
 
 router.post("/rents/add",middleware.ifAuthenticated,async(req,res)=>{
     try {
-        const {sin,tpid,cusid,stid} = req.body;
+        const {sin} = req.user;
+        const {tpid,cusid,stid} = req.body;
        await pool.query("CALL ADD_RENTAL($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::INTEGER,$5::INTEGER)",
-            [tpid,'PENDING',cusid,sin,stid],
+            [tpid,'ON RENT',cusid,sin,stid],
             async(err,results)=>{
                 if(err)
                   console.log(err);
@@ -76,7 +77,8 @@ router.get("/rents/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
 router.put("/rents/update/:renid",middleware.ifAuthenticated,async(req,res)=>{
     try {
             const {renid}=req.params;
-            const {sin,tpid,cusid,stid} = req.body;
+            const {sin} = req.user;
+            const {tpid,cusid,stid} = req.body;
            await pool.query("CALL UPD_RENTAL($1::INTEGER,$2::INTEGER,$3::VARCHAR,$4::INTEGER,$5::INTEGER,$6::INTEGER)",
                 [renid,tpid,'PENDING',cusid,sin,stid],
                 async(err,results)=>{

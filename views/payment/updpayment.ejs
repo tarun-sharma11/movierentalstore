@@ -13,21 +13,36 @@
                             <br>
                             
 
-                            <label for="Sin">SIN</label>
-                            <input id="Sin" type="number" value="<%=pay.sin%>" class="pure-input-1" name="sin">
-                            <br>
+                            
                             
                             <label for="Cost">Final Cost</label>
                             <input id="Cost" type="number" value="<%=pay.final_cost%>" class="pure-input-1" name="cost">
                             <br>
 
-                            <label for="paytype">Payment mode</label>
-                            <input id="paytype" type="text" value="<%=pay.type%>" class="pure-input-1" name="type">
+                            
+
+                            <label for="paytype">Payment mode:</label>
+            
+                            <select class="pure-input-1" name="type" id="paytype">
+                            <option type="text" value="<%=pay.type%>" ><%=pay.type%></option>
+                            <option type="text" value="CASH">CASH</option>
+                            <option type="text" value="CARD">CARD</option>
+                            <option type="text" value="CHEQUE">CHEQUE</option>
+                            </select>
+                            <br>
+                            
+
+                            <label for="paystatus">Status:</label>
+            
+                            <select class="pure-input-1" name="status" id="paystatus">
+                            <option type="text" value="<%=pay.status%>"><%=pay.status%></option>
+                            <option type="text" value="PENDING">PENDING</option>
+                            <option type="text" value="COMPLETED">COMPLETED</option>
+                            </select>
                             <br>
 
-                            <label for="paytstatu">Status</label>
-                            <input id="paytstatu" type="text" value="<%=pay.status%>" class="pure-input-1" name="status">
-                            <br>
+                            
+                            
 
                             <label for="Detail">Card or Cheque No.</label>
                             <input id="Detail" type="number" value="<%=pay.detail%>" class="pure-input-1" name="detail">

@@ -17,20 +17,30 @@
                             <input id="RentID" type="number" placeholder="Rent ID" class="pure-input-1" name="rentid">
                             <br>
 
-                            <label for="Sin">SIN</label>
-                            <input id="Sin" type="number" placeholder="SIN" class="pure-input-1" name="sin">
-                            <br>
-                            
+                           
                             <label for="Cost">Final Cost</label>
                             <input id="Cost" type="number" placeholder="Final Cost" class="pure-input-1" name="cost">
                             <br>
                             
-                            <label for="paystatus">Status</label>
-                            <input id="paystatus" type="text" placeholder="Status" class="pure-input-1" name="status">
-                            <br>
+                            
 
-                            <label for="paytype">Payment mode</label>
-                            <input id="paytype" type="text" placeholder="Payment mode" class="pure-input-1" name="type">
+                                    <label for="paystatus">Status:</label>
+            
+                                <select class="pure-input-1" name="status" id="paystatus">
+                                <option type="text" value="PENDING">PENDING</option>
+                                <option type="text" value="COMPLETED">COMPLETED</option>
+                                </select>
+                                <br>
+
+                           
+
+                            <label for="paytype">Payment mode:</label>
+            
+                            <select class="pure-input-1" name="type" id="paytype">
+                            <option type="text" value="CASH">CASH</option>
+                            <option type="text" value="CARD">CARD</option>
+                            <option type="text" value="CHEQUE">CHEQUE</option>
+                            </select>
                             <br>
 
                             <label for="Detail">Card or Cheque No.</label>

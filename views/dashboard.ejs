@@ -1,23 +1,51 @@
 <%- include("./partials/header") %>
 
+
         <div class="pureent hamdash1 fillin-val">
             <div class="header-small">
 
                 <div class="items">
-                    <h1 class="subhead">Dashboard</h1>
+                    <%if(ifadmin){%>
+                    <h1 style="text-align:center">Welcome to Admin</h1>
+                    <%}%>
+                    <%if(!ifadmin){%>
+                    <h1 style="text-align:center">Welcome to Employee</h1>
+                    <%}%>
+                    <div style="text-align:center">Welcome <%=oneemp.ename%></div> <br><br>
+                    <%if(ifadmin){%>
+                    <div>
+                        <h1 class="subhead "><br>Overall Store Summary</h1>
+                        <span>  <a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;" href="/employee"><div style="font-size: 35px;"><%=countemp%></div><br><br>Total Employees </a> </span> 
+                        <span><a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;margin-left: 4%;" href="/movies"><div style="font-size: 35px;"><%=countmov%></div><br><br>Total Movie Inventory  </a></span> 
+                        <span><a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;margin-left: 4%;" href="/customer"><div style="font-size: 35px;"><%=countcus%></div><br><br>Total Active Customers </a></span>
+                        <span><a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;margin-left: 4%;" href="/pays"><div style="font-size: 35px;"><%=countpay%></div><br><br>Total Transactions </a></span><br><br> <br> 
+                        
+
+                    </div>
+                    
+                    <br><br>
+                    <%}%>
+                    
+                    <h1 class="subhead"><br>Action Zone</h1>
                 </div>
                 <div>
-                 <span>  
-                     Welcome <%=oneemp.ename%>
-                 </span><br><br> 
+                    <br>
+                    <span>  <a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;" href="/rents/add"><img style="height: 40%; width:40%" src="assets/imgs/addicon.png"><br><br>New Rental </a> </span> 
+
+                 <span><a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;margin-left:2%;" href="/pays/add"><img style="height: 40%; width:40%; " src="assets/imgs/addicon.png"><br><br>View All Transactions</a></span> 
+                 <span><a  class="btn button-small button-secondary shadowback" style="width: 21%; border-radius: 12px;margin-left:2%;"href="/customer/add"><img style="height: 40%; width:40% ;" src="assets/imgs/addicon.png"><br><br>View Customers</a></span><br><br> 
                 </div>
-
-               
-
+                <br><br><br><br>
                 
+                <%if(dataadmin===1){%>
+                <div>
+                    <a class="btn button-success" href="/reset">Reset Data</a>
+                </div>
+                <%}%>
 
             </div>
         </div>
+        
     </div>
 </body>
 </html>

@@ -1,14 +1,15 @@
 const {pool} = require('./db');
 const fs = require("fs");
+const db = require('./db');
 const sqlspt = fs.readFileSync('database.sql').toString();
+const dbconfig = {};
 
-async function execute(){
+dbconfig.execute=async()=>{
     try {
         await pool.connect();
     console.log("Connected successfully.");
+    return 0;
     
-    return await pool.query(sqlspt
-        );
     
     
     // await pool.end();                                                                                                                                                                                                   
@@ -19,5 +20,15 @@ async function execute(){
     }   
 
 }
+dbconfig.reset=async()=>{
+    try {
+        console.log("Success in Reset");
+        return await pool.query(sqlspt
+            );
+    } catch (error) {
+        console.error(error.message);
+        
+    }
+}
 
-module.exports = execute;
+module.exports = dbconfig;

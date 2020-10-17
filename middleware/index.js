@@ -37,4 +37,21 @@ middlewareObj.ifsurvisor = (req,res,next)=>{
     }
 }
 
+middlewareObj.dba = (req,res,next)=>{
+    if(req.isAuthenticated()){
+        const iden= (req.user.sin);
+        
+            
+            if(iden===1010){
+                
+                return next();
+            }
+            else{
+                return res.redirect("back");
+            }
+    
+        
+    }
+}
+
 module.exports = middlewareObj;

@@ -20,13 +20,13 @@ app.use(
 );
 router.use(express.static(__dirname+"./public/"));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session());      
 app.set("view engine","ejs");
-app.use(express.static("public"));
+app.use(express.static("public"));   
 app.use(methodOverride('_method'));
 
 // Seeding
-seed();
+seed.execute();
 // Routes
 const movieRouters = require("./routes/movies");
 const loginRouters = require("./routes/login");
@@ -46,7 +46,7 @@ app.use(payRouters);
 app.use(customRouters);
 app.use(storeRouters);
 // Server config
-app.listen(process.env.PORT || 8888, process.env.IP,()=>{
+app.listen(process.env.PORT || 8080, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");
 })	
-      
+        
