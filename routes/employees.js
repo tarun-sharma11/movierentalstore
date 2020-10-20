@@ -196,7 +196,9 @@ router.delete("/employee/delete/:sin",middleware.ifsurvisor,async(req,res)=>{ //
         (err,result)=>{
             if(result)
             // res.json("Deleted the tape");
-		res.redirect("/employee");
+        res.redirect("/employee");
+            if(err)
+            console.log(err);
         }
 		);
 		
