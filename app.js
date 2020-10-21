@@ -46,7 +46,8 @@ app.use(payRouters);
 app.use(customRouters);
 app.use(storeRouters);
 // Server config
-app.listen(process.env.PORT || 8080, process.env.IP,()=>{
+app.listen(process.env.PORT || 8999, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");
 })	
-        
+		
+
