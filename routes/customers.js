@@ -33,38 +33,7 @@ router.get("/customer",middleware.ifAuthenticated,async(req,res)=>{
 	}
 });
 
-router.get("/img",async(req,res)=>{  
-	try {
-		// var base64str = base64_encode('/home/tarun/Downloads/tree.jpg');
-		// await pool.query("insert into images (imgname,img) values ('tree',$1)",[base64str],
-		// (err,result)=>{
-		// 	if(err)
-		// 	console.log(err)
-		// 	if(result)
-		// 	console.log("done");
-		// });
 
-		await pool.query("SELECT encode(img,'base64') FROM images where imgname='tree'",
-		[],
-		(err,results)=>{
-			if(err)
-			console.log(err)
-			if(results)
-			// res.json(results.rows[0].encode);
-			{var optionalObj = {'fileName': 'imageFileName', 'type':'png'};
-			var imageInfo = base64ToImage(results.rows[0].encode,'/home/tarun',optionalObj); 
-			res.send(imageInfo.fileName);
-			}
-			
-
-		});
-		
-
-		// res.render('./movies/movies',{movies:allMovie.rows});
-	} catch (err) {
-		console.error(err.message);
-	}
-});
 
 // add  
 
