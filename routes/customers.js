@@ -2,6 +2,73 @@ const express = require("express"),
 	  router = express.Router();
 const {pool} = require("../db");
 const middleware = require("../middleware");
+const upload = require('../multerconfig');
+
+router.get('/file/upload',  async(req, res) => {
+    res.render("./display/upload")
+})
+ 
+router.post('/file/upload', upload.single("file"), async(req, res) => {
+    try {
+        const type=req.file.mimetype,
+            name=req.file.filename,
+            data=req.file.buffer;
+        
+        await pool.query("INSERT INTO USERS(TYPE,NAME,DATA) VALUES ($1,$2,$3::bytea)",
+        [type,name,data],
+        (err,results)=>{
+            if(err)
+            console.log(err);
+            if(results)
+            res.json("successfull");
+        })
+    } catch (err) {
+        console.log(err);
+    }
+
+  });
+
+router.get("/info/:id",async(req,res)=>{
+	await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES WHERE TAPE_ID=$1",
+	[req.params.id],
+	async(err,files)=>{
+		if(files)
+		{
+			results = await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES order by stock limit 4");
+		res.render("./display/infodisplay",{movies:files.rows[0],top:results.rows});
+		}
+		//   res.json(files.rows[0]);
+		if(err)
+		console.log(err);
+		
+	  });
+})
+
+router.get('/homepage', async(req, res) => {
+  await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES order by stock limit 4",
+  
+  (err,files)=>{
+      if(files)
+	  res.render("./display/homepage",{movies:files.rows});
+		// res.json(files)
+      if(err)
+      console.log(err);
+      
+    });
+  });
+
+router.get("/alldisplay",async(req,res)=>{
+	await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES",
+  
+	(err,files)=>{
+		if(files)
+		res.render("./display/alldisplay",{movies:files.rows});
+		  // res.json(files)
+		if(err)
+		console.log(err);
+		
+	  });
+})
 
 // display
 

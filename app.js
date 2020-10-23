@@ -7,7 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const router = express.Router();
 const initializePassport = require("./passportConfig");
-initializePassport(passport);
+initializePassport.initialize(passport);
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -36,7 +36,8 @@ const rentRouters = require("./routes/rents");
 const payRouters = require("./routes/payments");
 const customRouters = require("./routes/customers");
 const storeRouters = require("./routes/stores");
- 
+const userRouters = require("./routes/user");
+
 app.use(movieRouters);
 app.use(loginRouters);
 app.use(distriRouters); 
@@ -45,6 +46,8 @@ app.use(rentRouters);
 app.use(payRouters);
 app.use(customRouters);
 app.use(storeRouters);
+app.use(userRouters);
+
 // Server config
 app.listen(process.env.PORT || 8080, process.env.IP,()=>{
 	console.log("DBMS Miniproject server started");

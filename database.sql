@@ -251,7 +251,7 @@ $$;
 
 
 
-CREATE TABLE CUSTOMERS (CUS_ID SMALLSERIAL PRIMARY KEY NOT NULL,CNAME VARCHAR(35),ADDRESS VARCHAR(50),STORE_ID INTEGER);
+CREATE TABLE CUSTOMERS (CUS_ID SMALLSERIAL PRIMARY KEY NOT NULL,CNAME VARCHAR(35),ADDRESS VARCHAR(50),STORE_ID INTEGER,EMAIL VARCHAR(100) NOT NULL, PASSWORD VARCHAR(100) NOT NULL,UNIQUE (EMAIL));
 
 CREATE TABLE CUS_PHONE (CUS_ID SMALLSERIAL NOT NULL,PH BIGINT);
 
@@ -261,7 +261,7 @@ ALTER TABLE CUS_PHONE ADD CONSTRAINT CUS_PHN_FK FOREIGN KEY (CUS_ID) REFERENCES 
 
 -- **************************************************************
 
-CREATE OR REPLACE PROCEDURE ADD_CUS (NAMEC character varying,STD INTEGER,ADDR character varying,PH1 IN CUS_PHONE.PH%TYPE)
+CREATE OR REPLACE PROCEDURE ADD_CUS (NAMEC character varying,STD INTEGER,ADDR character varying,EML IN CUSTOMERS.EMAIL%TYPE,PAS IN CUSTOMERS.PASSWORD%TYPE,PH1 IN CUS_PHONE.PH%TYPE)
 
 language plpgsql    
 as $$
@@ -271,7 +271,7 @@ STRNA STORE.SNAME%TYPE;
 BEGIN
 SELECT SNAME FROM STORE INTO STRNA WHERE STORE_ID=STD;
 IF FOUND THEN
-INSERT INTO CUSTOMERS (CNAME,ADDRESS,STORE_ID) VALUES (NAMEC,ADDR,STD);
+INSERT INTO CUSTOMERS (CNAME,ADDRESS,STORE_ID,EMAIL,PASSWORD) VALUES (NAMEC,ADDR,STD,EML,PAS);
 INSERT INTO CUS_PHONE (PH) VALUES (PH1);
 ELSE
 RAISE NOTICE 'STORE NOT FOUND';
@@ -279,17 +279,17 @@ END IF;
 END;
 $$;
 
-CALL ADD_CUS ('Ora Bernhard',1,'518 Grimes Grove',9022747122);
-CALL ADD_CUS ('Norma Streich',5,'3129 Norwood Garden',9022747122);
-CALL ADD_CUS ('Miss Antwon Welch',2,'126 Homenick Field',9022747122);
-CALL ADD_CUS ('Gayle Predovic',3,'321 Quigley Prairie',9022747122);
-CALL ADD_CUS ('Leanna Glover',4,'96802 Bailey Summit',9022747122);
+CALL ADD_CUS ('Ora Bernhard',1,'518 Grimes Grove','Ora@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Norma Streich',5,'3129 Norwood Garden','Norma@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Miss Antwon Welch',2,'126 Homenick Field','Antwon@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Gayle Predovic',3,'321 Quigley Prairie','Gayle@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Leanna Glover',4,'96802 Bailey Summit','Leanna @gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
 
-CALL ADD_CUS ('Paul Beier',1,'518 Grimes Grove',9022747122);
-CALL ADD_CUS ('Kay Olson',5,'3129 Norwood Garden',9022747122);
-CALL ADD_CUS ('Mr. Dolores Volkman',2,'126 Homenick Field',9022747122);
-CALL ADD_CUS ('Anissa Schumm',4,'321 Quigley Prairie',9022747122);
-CALL ADD_CUS ('Draco Malfoy',3,'96802 Bailey Summit',9022747122);
+CALL ADD_CUS ('Paul Beier',1,'518 Grimes Grove','Paul@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Kay Olson',5,'3129 Norwood Garden','Kay@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Mr. Dolores Volkman',2,'126 Homenick Field','Dolores@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Anissa Schumm',4,'321 Quigley Prairie','Anissa@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
+CALL ADD_CUS ('Draco Malfoy',3,'96802 Bailey Summit','Draco@gmail.com','$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia'::VARCHAR,9022747122);
 
 CREATE OR REPLACE PROCEDURE DEL_CUS (ID integer)
 
@@ -321,11 +321,25 @@ END IF;
 END;
 $$;
 
+CREATE OR REPLACE PROCEDURE UPD_BY_CUS (ID INTEGER,NAMEC character varying,ADDR character varying,EML IN CUSTOMERS.EMAIL%TYPE,PAS IN CUSTOMERS.PASSWORD%TYPE,PH1 IN CUS_PHONE.PH%TYPE)
+
+language plpgsql    
+as $$
+declare
+
+STRNA STORE.SNAME%TYPE;
+BEGIN
+
+UPDATE CUSTOMERS SET CNAME=NAMEC,ADDRESS=ADDR,EMAIL=EML,PASSWORD=PAS WHERE CUS_ID=ID;
+UPDATE CUS_PHONE SET PH=PH1 WHERE CUS_ID=ID;
+END;
+$$;
+
 -- ***********************TAPE ENTITY********************************
 
 
 CREATE TABLE TAPES(TAPE_ID SMALLSERIAL PRIMARY KEY NOT NULL,STOCK SMALLINT,PRICE SMALLINT,STORE_ID SMALLINT);
-CREATE TABLE MOVIES(TAPE_ID SMALLSERIAL NOT NULL,TITLE VARCHAR(50),DIRECTOR VARCHAR(50),DESCRIPTION VARCHAR(500),GENRE VARCHAR(10),RATING SMALLINT,NOS VARCHAR(50));
+CREATE TABLE MOVIES(TAPE_ID SMALLSERIAL NOT NULL,TITLE VARCHAR(50),DIRECTOR VARCHAR(50),DESCRIPTION VARCHAR(500),GENRE VARCHAR(10),RATING SMALLINT,NOS VARCHAR(50),PIC VARCHAR(50),IMDB VARCHAR(50));
 
 ALTER TABLE TAPES ADD CONSTRAINT ST_TP_FK FOREIGN KEY (STORE_ID) REFERENCES STORE(STORE_ID);
 
@@ -333,7 +347,7 @@ ALTER TABLE MOVIES ADD CONSTRAINT MOVIE_FK FOREIGN KEY (TAPE_ID) REFERENCES TAPE
 
 
 
-CREATE OR REPLACE PROCEDURE ADD_TAPE (STK integer,PR integer,SID integer,TIT character varying,DIR character varying,DES character varying,GEN character varying,RAT integer,STR character varying)
+CREATE OR REPLACE PROCEDURE ADD_TAPE (STK integer,PR integer,SID integer,TIT character varying,DIR character varying,DES character varying,GEN character varying,RAT integer,STR character varying,IMG character varying,LINK character varying)
 
 language plpgsql    
 as $$
@@ -345,21 +359,21 @@ BEGIN
 SELECT SNAME FROM STORE INTO STRNA WHERE STORE_ID=SID;
 IF FOUND THEN
 INSERT INTO TAPES (STOCK,PRICE,STORE_ID) VALUES (STK,PR,SID);
-INSERT INTO MOVIES (TITLE,DIRECTOR,DESCRIPTION,GENRE,RATING,NOS) VALUES (TIT,DIR,DES,GEN,RAT,STR);
+INSERT INTO MOVIES (TITLE,DIRECTOR,DESCRIPTION,GENRE,RATING,NOS,PIC,IMDB) VALUES (TIT,DIR,DES,GEN,RAT,STR,IMG,LINK);
 ELSE
 RAISE NOTICE 'STORE NOT FOUND';
 END IF;
 END;
 $$;
 
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Sorcerers Stone','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Daniel Jacob Radcliffe');
-CALL ADD_TAPE (100,399,5,'Harry Potter and the Chamber of Secrets','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Emma Watson');
-CALL ADD_TAPE (100,399,2,'Harry Potter and the Prisoner of Azkaban ','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Rupert Grint');
-CALL ADD_TAPE (100,399,4,'Harry Potter and the Goblet of Fire','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Richard Harris');
-CALL ADD_TAPE (100,399,3,'Harry Potter and the Order of the Phoenix','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Maggie Smith');
-CALL ADD_TAPE (100,399,2,'Harry Potter and the Half-Blood Prince','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Robbie Coltrane');
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 1','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Alan Rickman');
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 2','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Ralph Fiennes');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Sorcerers Stone','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Daniel Jacob Radcliffe','sorcerers-stone.jpg','https://www.imdb.com/title/tt0241527/');
+CALL ADD_TAPE (100,399,5,'Harry Potter and the Chamber of Secrets','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Emma Watson','chamber-of-secrets.jpg','https://www.imdb.com/title/tt0295297/');
+CALL ADD_TAPE (100,399,2,'Harry Potter and the Prisoner of Azkaban ','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Rupert Grint','prisoner-of-azkaban.jpg','https://www.imdb.com/title/tt0304141/');
+CALL ADD_TAPE (100,399,4,'Harry Potter and the Goblet of Fire','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Richard Harris','goblet-of-fire.jpg','https://www.imdb.com/title/tt0330373/');
+CALL ADD_TAPE (100,399,3,'Harry Potter and the Order of the Phoenix','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Maggie Smith','order-of-the-phoenix.jpg','https://www.imdb.com/title/tt0373889/');
+CALL ADD_TAPE (100,399,2,'Harry Potter and the Half-Blood Prince','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Robbie Coltrane','half-blood-prince.jpg','https://www.imdb.com/title/tt0417741/');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 1','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Alan Rickman','deathly-hallows-part-1.jpg','https://www.imdb.com/title/tt0926084/');
+CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 2','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Ralph Fiennes','deathly-hallows-part-2.jpg','https://www.imdb.com/title/tt1201607/');
 
 
 
@@ -405,7 +419,8 @@ $$;
 -- *****************************RENTAL ENTITY**************************************
 
 
-CREATE TABLE RENTALS(RENTAL_ID SMALLSERIAL PRIMARY KEY,TAPE_ID INTEGER,STATUS VARCHAR(20),CUS_ID INTEGER,SIN INTEGER,STORE_ID INTEGER,RENTON TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE RENTALS(RENTAL_ID SMALLSERIAL PRIMARY KEY,TAPE_ID INTEGER,STATUS VARCHAR(20),CUS_ID INTEGER,SIN INTEGER,STORE_ID INTEGER,RENTON TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 
 ALTER TABLE RENTALS ADD CONSTRAINT ST_REN_FK FOREIGN KEY (STORE_ID) REFERENCES STORE(STORE_ID);
 
@@ -605,3 +620,4 @@ CALL ADD_RENTAL(7,'ON RENT',3,1010,4);
 
 
 CALL ADD_PAY(1,1010,230,'PENDING','CASH',0);
+

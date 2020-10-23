@@ -6,7 +6,7 @@
             <p>
                 Rent blockbuster Movies with HD quality and high-audio quality at nominal rates and let the actors procide you with unlimited entertainment.
             </p>
-            <a href="allmovies.html" class="button hero__btn">Rent Now</a>
+            <a href="/alldisplay" class="button hero__btn">Rent Now</a>
         </div>
 
         <div class="hero__right">
@@ -25,56 +25,25 @@
         </div>
 
         <div class="product__center">
-            
+            <% movies.forEach((movie)=>{%>
             <div class="product">
-                <a href="productpage.html"> 
+                <a href="/info/<%=movie.tape_id%>"> 
                 <div class="product__header">
-                    <img src="assets/imgs/avengers.jpg" alt="">
+                    <img src="/uploads/<%=movie.pic%>" alt="">
 
                 </div>
                 
                     <div class="product__footer">
-                        <h2>avengers</h2>
+                        <h2><%=movie.title%></h2>
 
-                        <h4 class="price">Rs. 5 / day</h4>
+                        <h4 class="price">Rs <%=movie.price%> / per day</h4>
                     </div>
 
                 </a>
                 
             </div>
-            <div class="product">
-                <div class="product__header">
-                    <img src="assets/imgs/spiderman.jpg" alt="">
-
-                </div>
-                <div class="product__footer">
-                    <h2>Spiderman</h2>
-
-                    <h4 class="price">Rs. 3 / day</h4>
-                </div>
-            </div>
-            <div class="product">
-                <div class="product__header">
-                    <img src="assets/imgs/aquaman.jpg" alt="">
-
-                </div>
-                <div class="product__footer">
-                    <h2>Aquaman</h2>
-
-                    <h4 class="price">Rs. 4 / day</h4>
-                </div>
-            </div>
-            <div class="product">
-                <div class="product__header">
-                    <img src="assets/imgs/batman.jpg" alt="">
-
-                </div>
-                <div class="product__footer">
-                    <h2>Batman</h2>
-
-                    <h4 class="price">Rs. 5 / day</h4>
-                </div>
-            </div>
+            <%})%>
+           
         </div>
     </div>
 </section>
@@ -85,7 +54,7 @@
             <div class="content">
                 <h2>Rent Top Movies</h2>
                 <h1>50% off</h1>
-                <a href="allmovies.html" class="button category__btn">Rent Now</a>
+                <a href="/alldisplay" class="button category__btn">Rent Now</a>
             </div>
             <img src="assets/imgs/50off.jpg" alt="">
         </div>

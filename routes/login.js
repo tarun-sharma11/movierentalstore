@@ -8,7 +8,7 @@ const db = require("../db");
 const { pool } = require("../db");
 const middleware = require("../middleware")
 router.get("/",(req,res)=>{
-    res.render("./display/homepage");
+    res.redirect("/homepage");
 });
 router.get("/dashboard",middleware.ifAuthenticated,async(req,res)=>{ 
     const id = req.user.sin;
