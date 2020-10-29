@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;700&display=swap" rel="stylesheet">
+    
+        <!-- StyleSheet -->
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <title>All rentals</title>
+    </head>
+    <body>
+        <header class="header" id="header" style="height: 100px !important;">
+            <nav class="nav">
+                <div class="nav__center container">
+                    <div class="logo">
+                        <h1>Movie Rental Store</h1>
+                    </div>
+    
+                    <div class="nav__menu" style="margin-top: 1.5% !important;">
+                        <ul class="nav__list">
+                            <li class="nav__item">
+                                <a href="/homepage" class="nav__link scroll-link">Home</a>
+                            </li>
+    
+                            <li class="nav__item">
+                                <a href="/myrents" class="nav__link scroll-link">My Rentals</a>
+                            </li>
+    
+                            <li class="nav__item">
+                                <a href="/alldisplay" class="nav__link scroll-link">Explore</a>
+                            </li>
+    
+                            <li class="nav__item">
+                                <a href="/customer/login" class="nav__link scroll-link">Login/Signup</a>
+                            </li>
+  
+                        </ul>
+    
+                    </div>
+                </div>
+            </nav>
+
+</header>
+    <section class="section all__products" id="all">
+        <div class="all__center container">
+            <div class="title">
+                <h1>All Available Rentals</h1>
+            </div>
+
+            <div class="product__center" style="color: #000 !important;">
+                <% movies.forEach((movie)=>{%>
+                <a href="/info/<%=movie.tape_id%>"> 
+                    <div class="product">
+                        <div class="product__header">
+                            <img src="/uploads/<%=movie.pic%>" alt="">
+        
+                        </div>
+                        <div class="product__footer">
+                            <h2><%=movie.title%></h2>
+        
+                            <h4 class="price">Rs. <%=movie.price%> / day</h4>
+                        </div>
+                    </div>
+
+                </a>
+                <%})%>
+                
+            </div>
+        </div>
+    </section>
+</body>
+</html>
