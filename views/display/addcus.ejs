@@ -7,7 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
     
-        <title>login</title>
+        <title>Register</title>
     </head>
 
     <style>
@@ -66,6 +66,7 @@
                             <li class="nav__item">
                                 <a href="/customer/login" class="nav__link scroll-link">Login/Signup</a>
                             </li>
+                            
 
                         </ul>
     
@@ -78,16 +79,22 @@
         </header>
 
          <div style="margin-top:5%">
-                <center><h1> Login </h1> </center>   
-                <form action="/customer/login" method="POST">  
-                    <div class="container" style="width:50% !important;">   
+                <center><h1> Register </h1> </center>   
+                <form action="/newcustomer" method="post">  
+                    <div class="container" style="width:50% !important;">  
+                        <label>Name : </label>   
+                        <input type="text" placeholder="Enter Name" name="cusname" required> 
                         <label>Email : </label>   
                         <input type="text" placeholder="Enter Email-ID" name="email" required>  
                         <label>Password : </label>   
-                        <input type="password" placeholder="Enter Password" name="password" required>  
-                        <button type="submit">Login</button>  
-                        <a href="/newcustomer"> New user? Signup</a> <br><br>
-                        <a href="/user/login"> Employee? Login Here</a> 
+                        <input type="password" placeholder="Enter Password" name="password" required>
+                        <label>Re-enter Password : </label>   
+                        <input type="password" placeholder="Enter Password Again" name="password2" required>  
+                        <label>Address : </label>   
+                        <input type="text" placeholder="Enter Address" name="address" required> 
+                        <label>Phone Number : </label>   
+                        <input type="text" placeholder="Enter Phone Number" name="ph" required> 
+                        <button type="submit">Sign Up</button>  
                     </div>   
                 </form>     
             </div>

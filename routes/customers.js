@@ -2,7 +2,7 @@ const express = require("express"),
 	  router = express.Router();
 const {pool} = require("../db");
 const middleware = require("../middleware");
-
+const bcrypt = require("bcrypt");
 
 
 
@@ -39,20 +39,32 @@ router.get("/customer/add",middleware.ifAuthenticated,(req,res)=>{ //,middleware
 
 router.post("/customer/add",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
-		const {cusname,stid,address,ph} = req.body;
 		
-		await pool.query("CALL ADD_CUS($1::VARCHAR,$2::INTEGER,$3::VARCHAR,$4::BIGINT)",
-        [cusname,stid,address,ph],
+		const {cusname,stid,address,email,ph} = req.body;
+		let errors = []
+		
+        if(!cusname || !email )
+        {errors.push({message:"Please enter all the field correctly"});} 
+        
+    
+        else{    
+            
+            
+          
+		await pool.query("CALL ADD_CUS($1::VARCHAR,$2::INTEGER,$3::VARCHAR,$4::VARCHAR,$5::VARCHAR,$6::BIGINT)",
+        [cusname,stid,address,email,'$2b$10$v58OEMwCo0n2vEXrUOwS7OBuFKE69Y0YXRBBAUsGDiSiupZukmvia',ph],
         (err,results)=>{
             if(results){
-            // res.json(results.rows[0]);
-            res.redirect("/customer"); 
+			// res.json(results.rows[0]);
+			
+			res.redirect("/customer"); 
+			
             }
             if(err){
                 console.log(err);
             }
-        }
-		);
+        });
+		}
 
 	} catch (err) {
 		console.error(err.message);

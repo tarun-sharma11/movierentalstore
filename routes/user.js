@@ -6,6 +6,7 @@ const express = require("express"),
 var stream = require('stream');
 var path = require('path');
 const passport = require("passport");
+const bcrypt = require("bcrypt");
 
 
 // router.get('/file/upload',  async(req, res) => {
@@ -48,15 +49,26 @@ async(err,files)=>{
   console.log(err);
   
   });
-})
+});
+
+router.post("/checkout/:id",middleware.ifcustomer,async(req,res)=>{
+  const {cus_id} = req.user;
+  await pool.query("CALL ADD_RENTAL($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::INTEGER,$5::INTEGER)",
+            [req.params.id,'ON RENT',cus_id,0,0],
+            (err,result)=>{
+              if(err)
+              console.log(err);
+              if(result)
+              res.redirect('/myrents');
+            });
+  })
 
 router.get('/homepage', async(req, res) => {
-await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES order by stock limit 4",
-
+  await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES order by stock limit 4",
 (err,files)=>{
     if(files)
   res.render("./display/homepage",{movies:files.rows});
-  // res.json(files)
+  // res.json(result.rows[0])
     if(err)
     console.log(err);
     
@@ -84,8 +96,16 @@ router.post("/customer/login",passport.authenticate("customer",{
 )
 );
 
-router.get("/customer/login",middleware.ifnotAuthenticated,(req,res)=>{ //middleware
+router.get("/customer/login",middleware.ifnotcustomer,(req,res)=>{ //middleware
   res.render("./display/login");
+});
+
+
+
+router.get("/customer/logout",middleware.ifcustomer,(req,res)=>{
+  req.logOut();
+  //flash
+  res.redirect("/homepage");
 });
 
 router.get("/myrents",middleware.ifcustomer,async(req,res)=>{
@@ -100,7 +120,50 @@ router.get("/myrents",middleware.ifcustomer,async(req,res)=>{
     // res.json(results.rows);
   })
   
-})
+});
+
+router.get("/newcustomer",middleware.ifnotcustomer,async(req,res)=>{
+  res.render("./display/addcus");
+});
+router.post("/newcustomer",async(req,res)=>{  //,middleware.ifsurvisor
+	try {
+		
+		const {cusname,address,email,password,password2,ph} = req.body;
+		let errors = []
+		
+        if(!cusname || !email || !password || !password2)
+        {errors.push({message:"Please enter all the field correctly"});} 
+        if(password.length < 6)
+        {errors.push({message:"Please enter all the field correctly"});} 
+        if(password!=password2)
+        {errors.push({message:"Please enter all the field correctly"});} 
+        if(errors.length > 0){
+            res.send("Error");
+        }
+    
+        else{    
+            
+            const hashedpassword = await bcrypt.hash(password,10);
+          
+		await pool.query("CALL ADD_CUS($1::VARCHAR,$2::INTEGER,$3::VARCHAR,$4::VARCHAR,$5::VARCHAR,$6::BIGINT)",
+        [cusname,0,address,email,hashedpassword,ph],
+        (err,results)=>{
+            if(results){
+			// res.json(results.rows[0]);
+			
+			res.redirect("/")
+            }
+            if(err){
+                console.log(err);
+            }
+        });
+		}
+
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
 
 router.get('/file/upload',  async(req, res) => {
     res.render("./display/upload")

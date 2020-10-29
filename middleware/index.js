@@ -28,11 +28,20 @@ middlewareObj.ifnotAuthenticated = (req,res,next)=>{
 }
 
 middlewareObj.ifcustomer = (req,res,next)=>{
-    if(req.customerAuthenticate()){
+    if(req.isAuthenticated()){
         return next();
     }
     else
         return res.redirect("/homepage");
+}
+
+middlewareObj.ifnotcustomer = (req,res,next)=>{
+    if(req.isAuthenticated()){
+        return res.redirect("back");
+    }
+    else{
+        return next();
+    }
 }
 
 middlewareObj.ifsurvisor = (req,res,next)=>{
@@ -70,13 +79,6 @@ middlewareObj.dba = (req,res,next)=>{
     }
 }
 
-middlewareObj.ifcustomer = (req,res,next)=>{
-    if(req.isAuthenticated()){
-        return next();
-    }
-    else{
-        return res.redirect("/customer/login");
-    }
-}
+
 
 module.exports = middlewareObj;
