@@ -1,4 +1,4 @@
-let upload = require('../multerconfig');
+
 const {pool} = require("../db");
 const middleware = require("../middleware");
 const express = require("express"),
@@ -165,29 +165,7 @@ router.post("/newcustomer",async(req,res)=>{  //,middleware.ifsurvisor
 });
 
 
-router.get('/file/upload',  async(req, res) => {
-    res.render("./display/upload")
-})
- 
-router.post('/file/upload', upload.single("file"), async(req, res) => {
-    try {
-        const type=req.file.mimetype,
-            name=req.file.filename,
-            data=req.file.buffer;
-        
-        await pool.query("INSERT INTO USERS(TYPE,NAME,DATA) VALUES ($1,$2,$3::bytea)",
-        [type,name,data],
-        (err,results)=>{
-            if(err)
-            console.log(err);
-            if(results)
-            res.json("successfull");
-        })
-    } catch (err) {
-        console.log(err);
-    }
 
-  });
 
 
  

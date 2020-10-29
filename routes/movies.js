@@ -2,13 +2,14 @@ const express = require("express"),
 	  router = express.Router();
 const {pool} = require("../db");
 const middleware = require("../middleware");
+const upload = require('../multerconfig');
   
-router.post("/movies/add",middleware.ifsurvisor,async(req,res)=>{  //
+router.post("/movies/add", upload.single("file"),async(req,res)=>{  //
 	try {
-		const {stock,price,st_id,title,direct,descp,gene,rating,nos} = req.body;
-		
-		await pool.query("CALL ADD_TAPE ($1,$2,$3,$4,$5,$6,$7,$8,$9);",
-		[stock,price,st_id,title,direct,descp,gene,rating,nos],
+		const {stock,price,st_id,title,direct,descp,gene,rating,nos,link} = req.body;
+		const pic=req.file.filename;
+		await pool.query("CALL ADD_TAPE ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11);",
+		[stock,price,st_id,title,direct,descp,gene,rating,nos,pic,link],
 		(err,result)=>{
 			if(err)
 				console.log(err)
@@ -21,6 +22,47 @@ router.post("/movies/add",middleware.ifsurvisor,async(req,res)=>{  //
 		console.error(err.message);
 	}
 });
+
+router.get("/movies/picupd/:id",middleware.ifsurvisor,async(req,res)=>{
+	try {
+
+		
+		const {id} = req.params;
+		const aMovie = await pool.query("SELECT * FROM MOVIES WHERE TAPE_ID=$1",
+		[id]
+		);
+		// res.json(aMovie.rows[0]);
+		
+		res.render("./movies/picupd",{movie:aMovie.rows[0]});
+	} catch (err) {
+		console.error(err.message);
+		
+	}
+	
+});
+
+router.put("/movies/picupd/:id",upload.single("file"),async(req,res)=>{ 
+	try {
+		const pic=req.file.filename;
+		
+		const {id} = req.params;
+		await pool.query("UPDATE MOVIES SET PIC=$1 WHERE TAPE_ID = $2",
+		[pic,id],
+		(err,results)=>{
+			if(results)
+			res.redirect("/movies");
+			if(err)
+			console.log(err);
+		}
+		);
+		// res.json("Update the Tape");
+		
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+
 router.get("/movies/add",middleware.ifsurvisor,(req,res)=>{ //,middleware.ifsurvisor
 	try {
 		res.render("./movies/addmovie");
@@ -59,10 +101,11 @@ router.get("/movies/update/:id",middleware.ifsurvisor,async(req,res)=>{  //middl
 
 router.put("/movies/update/:id",middleware.ifsurvisor,async(req,res)=>{ //middleware.ifsurvisor,
 	try {
-		const {stock,price,st_id,title,direct,descp,gene,rating,nos} = req.body;
+		const {stock,price,st_id,title,direct,descp,gene,rating,nos,link} = req.body;
+		
 		const {id} = req.params;
-		await pool.query("CALL UPD_TAPE ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);",
-		[id,stock,price,st_id,title,direct,descp,gene,rating,nos],
+		await pool.query("CALL UPD_TAPE ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+		[id,stock,price,st_id,title,direct,descp,gene,rating,nos,link],
 		(err,results)=>{
 			if(results)
 			res.redirect("/movies");
@@ -96,5 +139,7 @@ router.delete("/movies/delete/:id",middleware.ifsurvisor,async(req,res)=>{ //mid
 		console.error(err.message);
 	}
 });
+
+
 
 module.exports = router;

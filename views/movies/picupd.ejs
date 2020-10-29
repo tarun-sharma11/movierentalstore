@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+
+<div class="pureent hamdash1 fillin-val">
+    <div class="header-small">
+
+        <div class="items">
+            <h1 class="subhead">Edit Movie Details<%=movie.title%></h1>
+
+            <form action="/movies/picupd/<%=movie.tape_id%>?_method=PUT" method="post" enctype="multipart/form-data" novalidate autocomplete="off" class="form form-stacked">
+                <fieldset>
+                    
+                    <label  for="FormFile">Please Upload an image </label>
+                    <input  type="file" id="FormFile" value="<%=movie.pic%>" name="file" >
+                    <br>
+                    <br>
+                    <input type="hidden" name="id" value="1">
+                    <button type="submit" class="btn button-success">Save</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

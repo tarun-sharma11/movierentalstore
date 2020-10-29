@@ -6,7 +6,7 @@
         <div class="items">
             <h1 class="subhead">Add Movie Details</h1>
 
-            <form action="/movies/add" method="post" novalidate autocomplete="off" class="form form-stacked">
+            <form action="/movies/add" method="post"  enctype="multipart/form-data" novalidate autocomplete="off" class="form form-stacked">
                 <fieldset>
                     
                     <label for="storeid">Store ID</label>
@@ -37,12 +37,18 @@
                     <label for="RentalCost">Rental Cost per Day(in INR)</label>
                     <input id="RentalCost" type="number" placeholder="Rental Cost per Day(in INR)" class="pure-input-1" name="price">
                     <br>
-
+                    <label  for="FormFile">Please Upload an image </label>
+                    <input  type="file" id="image" name="file" >
+                    <br>
+                    <label for="link">IMDB Link</label>
+                    <input id="link" type="text" placeholder="IMDB Link" class="pure-input-1" name="link" >
+                    <br>
                     <br>
                     <input type="hidden" name="id" value="1">
                     <button type="submit" class="btn button-success">Save</button>
                 </fieldset>
             </form>
+            
         </div>
 
     </div>

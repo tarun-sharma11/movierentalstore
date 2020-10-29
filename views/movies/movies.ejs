@@ -25,6 +25,7 @@
 					<th>Rating</th>
 					<th>Name of Star</th>
 					<th>Edit</th>
+					<th>Edit Poster</th>
 					<th>Delete</th>
 					
 				</tr>
@@ -45,6 +46,9 @@
 					<td><%=movie.nos%></td>
 					<td>
 						<a class="btn button-small button-success" href="/movies/update/<%=movie.tape_id%>">Edit</a>
+					</td>
+					<td>
+						<a class="btn button-small button-success" href="/movies/picupd/<%=movie.tape_id%>">Edit</a>
 					</td>
 					<td>
 						<form action="/movies/delete/<%=movie.tape_id%>?_method=DELETE" method="POST">

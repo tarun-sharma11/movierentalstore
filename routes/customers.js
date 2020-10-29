@@ -94,10 +94,10 @@ router.get("/customer/update/:id",middleware.ifAuthenticated,async(req,res)=>{ /
 router.put("/customer/update/:id",middleware.ifAuthenticated,async(req,res)=>{  //,middleware.ifsurvisor
 	try {
         const {id}= req.params;
-		const {cusname,stid,address,ph} = req.body;
+		const {cusname,stid,address,email,ph} = req.body;
 		
-		await pool.query("CALL UPD_CUS($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::VARCHAR,$5::BIGINT)",
-        [id,cusname,stid,address,ph],
+		await pool.query("CALL UPD_CUS($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::BIGINT)",
+        [id,cusname,stid,address,email,ph],
         (err,results)=>{
             if(results){
             // res.json("update");
