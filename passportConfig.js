@@ -1,8 +1,8 @@
 const LocalStrategy = require("passport-local").Strategy;
 const { pool } = require("./db");
 const bcrypt = require("bcrypt");
-const passConfig = {}
-passConfig.initialize = (passport)=>{
+
+function initialize(passport){
     const authenticateUser = async(email,password,done)=>{
         try {
 
@@ -41,6 +41,7 @@ passConfig.initialize = (passport)=>{
     };
 
     passport.use(
+        'employees',
         new LocalStrategy(
             {
                 usernameField: "email",
@@ -62,6 +63,6 @@ passConfig.initialize = (passport)=>{
             }
         )
     })
- };
+}
 
- module.exports = passConfig;
+ module.exports = initialize;

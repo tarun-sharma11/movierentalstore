@@ -2,11 +2,12 @@ const express = require("express"),
       reset = require("../seedDB"),
 	  router = express.Router();
                
-const session = require("express-session"); 
+
 const passport = require("passport");
-const db = require("../db");
+
 const { pool } = require("../db");
 const middleware = require("../middleware")
+
 router.get("/",(req,res)=>{
     res.redirect("/homepage");
 });
@@ -31,13 +32,14 @@ router.get("/dashboard",middleware.ifAuthenticated,async(req,res)=>{
     
 })
 
-router.post("/user/login",passport.authenticate("local",{
+router.post("/user/login",passport.authenticate("employees",{
     successRedirect: "/dashboard",
     failureRedirect: "/user/login",
 
 }
 )
 );
+
 router.get("/user/login",middleware.ifnotAuthenticated,(req,res)=>{
     res.render("login")
 })
