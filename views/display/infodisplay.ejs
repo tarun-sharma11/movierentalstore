@@ -73,8 +73,8 @@ body {
          
              <div class="prodmain">
                  <div class="pcontainer">
-                    <div class="product__header">
-                    <!-- <div class="cover"> -->
+                    
+                    <div class="cover">
                         <img src="/uploads/<%=movies.pic%>">
                      </div>
                      <div class="content">
@@ -103,9 +103,7 @@ body {
                                         <div style="margin-left: -38rem !important;">
                                             <div class="section category">
                                                 <div style="margin-left:40%">
-                                                    <form action="/checkout/<%=movies.tape_id%>" method="POST">
-                                                        <button type="submit" class="button category__btn">Rent Now</button>
-                                                    </form>
+                                                    <a href="/checkout/<%=movies.tape_id%>" class="button category__btn">Rent Now</a>
                                                 </div>
                                             </div>
                                             

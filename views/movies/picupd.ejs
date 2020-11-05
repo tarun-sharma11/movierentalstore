@@ -5,6 +5,10 @@
 
         <div class="items">
             <h1 class="subhead">Edit Movie Details<%=movie.title%></h1>
+            <div class="product__header">
+                <img src="/uploads/<%=movie.pic%>" alt="">
+
+            </div>
 
             <form action="/movies/picupd/<%=movie.tape_id%>?_method=PUT" method="post" enctype="multipart/form-data" novalidate autocomplete="off" class="form form-stacked">
                 <fieldset>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+    
+        <title>Payment</title>
+    </head>
+
+    <style>
+
+         
+        button {   
+               background-color: #4CAF50;   
+               width: 100%;  
+                color:#fff;   
+                padding: 15px;   
+                margin: 10px 0px;   
+                border: none;   
+                cursor: pointer;   
+                 }   
+ 
+         input[type=text], input[type=password] {   
+                width: 100%;   
+                margin: 8px 0;  
+                padding: 12px 20px;   
+                display: inline-block;   
+                border: 0.5px solid #000;   
+                box-sizing: border-box;   
+            }  
+         button:hover {   
+                opacity: 0.7;   
+            }   
+          .cancelbtn {   
+                width: auto;   
+                padding: 10px 18px;  
+                margin: 10px 5px;  
+            }   
+  
+        </style>   
+    <body>
+        <header class="header" id="header" style="height: 100px !important;">
+            <nav class="nav">
+                <div class="nav__center container">
+                    <div class="logo">
+                        <h1>Movie Rental Store</h1>
+                    </div>
+                </div>
+            </nav>
+    
+           
+        </header>
+
+         <div style="margin-top:5%">
+                <center><h1> Payment of Total Cost:<%=pay.price%></h1> </center>   
+                <!-- <div class="container" style="width:50% !important;"> 
+                
+                        <label><b></b> </label>  <br><br><br>
+                </div> -->
+                <center><h1> Card Details </h1> </center>  
+                <form action="/checkout/<%=pay.price%>/<%=pay.tape_id%>" method="POST">  
+                    <div class="container" style="width:50% !important;"> 
+                        
+                        <label>Card Number: </label>   
+                        <input type="text" placeholder="Card Number" name="detail" required> 
+                        <button type="submit">Submit</button>
+                    </div>   
+                </form>     
+            </div>
+
+    </body>
+</html>

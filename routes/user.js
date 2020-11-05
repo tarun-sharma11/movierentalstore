@@ -8,33 +8,6 @@ var path = require('path');
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 
-
-// router.get('/file/upload',  async(req, res) => {
-//   res.render("./display/upload")
-// })
-
-// router.post('/file/upload', upload.single("file"), async(req, res) => {
-//   try {
-//       const type=req.file.mimetype,
-//           name=req.file.filename,
-//           data=req.file.buffer;
-      
-//       await pool.query("INSERT INTO USERS(TYPE,NAME,DATA) VALUES ($1,$2,$3::bytea)",
-//       [type,name,data],
-//       (err,results)=>{
-//           if(err)
-//           console.log(err);
-//           if(results)
-//           res.json("successfull");
-//       })
-//   } catch (err) {
-//       console.log(err);
-//   }
-
-// });
-
-// Online
-
 router.get("/info/:id",async(req,res)=>{
 await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES WHERE TAPE_ID=$1",
 [req.params.id],
@@ -51,16 +24,46 @@ async(err,files)=>{
   });
 });
 
-router.post("/checkout/:id",middleware.ifcustomer,async(req,res)=>{
+router.get("/checkout/:id",middleware.ifcustomer,async(req,res)=>{
+  await pool.query("Select * from tapes where tape_id=$1",
+  [req.params.id],
+  (err,results)=>{
+    if(err)
+    console.log(err)
+    if(results){
+      res.render("./display/checkout",{pay:results.rows[0]});
+    }
+  })
+})
+
+router.post("/checkout/:price/:id",middleware.ifcustomer,async(req,res)=>{
+  const {detail} = req.body;
   const {cus_id} = req.user;
+  // console.log(req.params.price);
   await pool.query("CALL ADD_RENTAL($1::INTEGER,$2::VARCHAR,$3::INTEGER,$4::INTEGER,$5::INTEGER)",
             [req.params.id,'ON RENT',cus_id,0,0],
-            (err,result)=>{
+            async(err,result)=>{
               if(err)
               console.log(err);
               if(result)
-              res.redirect('/myrents');
+              await pool.query("SELECT RENTAL_ID FROM RENTALS WHERE TAPE_ID = $1",
+              [req.params.id],
+              async(err,result)=>{
+                if(err)
+                console.log(err);
+                if(result);
+                await pool.query("CALL ADD_PAY($1::INTEGER,$2::INTEGER,$3::INTEGER,$4::VARCHAR,$5::VARCHAR,$6::INTEGER)",
+                [result.rows[0].rental_id,0,req.params.price,'COMPLETED','CARD',detail],
+                (err,result)=>{
+                  if(result)
+                  res.redirect('/myrents');
+                  if(err)
+                  console.log(err);
+                });
+              })
+              
             });
+  
   })
 
 router.get('/homepage', async(req, res) => {
@@ -110,7 +113,7 @@ router.get("/customer/logout",middleware.ifcustomer,(req,res)=>{
 
 router.get("/myrents",middleware.ifcustomer,async(req,res)=>{
   const id = req.user.cus_id;
-  await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES WHERE TAPE_ID=(SELECT TAPE_ID FROM RENTALS WHERE CUS_ID=$1)",
+  await pool.query("SELECT * FROM TAPES NATURAL JOIN MOVIES WHERE TAPE_ID IN (SELECT TAPE_ID FROM RENTALS WHERE CUS_ID=$1)",
   [id],
   (err,results)=>{
     if(err)
