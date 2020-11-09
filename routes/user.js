@@ -71,7 +71,7 @@ router.get('/homepage', async(req, res) => {
 (err,files)=>{
     if(files)
   res.render("./display/homepage",{movies:files.rows});
-  // res.json(result.rows[0])
+  // res.json(files.rows)
     if(err)
     console.log(err);
     

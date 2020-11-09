@@ -14,7 +14,7 @@ router.get("/",(req,res)=>{
 router.get("/dashboard",middleware.ifAuthenticated,async(req,res)=>{ 
     const id = req.user.sin;
     const ifad = await pool.query("select * from supervisors where sin=$1",[id]);
-    const totemp = await pool.query("select count(*) from employees");
+    const totemp = await pool.query("select count(*) from employees where sin <> 0");
     const totmov = await pool.query("select count(*) from tapes");
     const totcus = await pool.query("select count(*) from customers");
     const totpay = await pool.query("select count(*) from payments");

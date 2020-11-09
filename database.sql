@@ -371,14 +371,14 @@ END IF;
 END;
 $$;
 
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Sorcerers Stone','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Daniel Jacob Radcliffe','sorcerers-stone.jpg','https://www.imdb.com/title/tt0241527/');
-CALL ADD_TAPE (100,399,5,'Harry Potter and the Chamber of Secrets','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Emma Watson','chamber-of-secrets.jpg','https://www.imdb.com/title/tt0295297/');
-CALL ADD_TAPE (100,399,2,'Harry Potter and the Prisoner of Azkaban ','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Rupert Grint','prisoner-of-azkaban.jpg','https://www.imdb.com/title/tt0304141/');
-CALL ADD_TAPE (100,399,4,'Harry Potter and the Goblet of Fire','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Richard Harris','goblet-of-fire.jpg','https://www.imdb.com/title/tt0330373/');
-CALL ADD_TAPE (100,399,3,'Harry Potter and the Order of the Phoenix','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Maggie Smith','order-of-the-phoenix.jpg','https://www.imdb.com/title/tt0373889/');
-CALL ADD_TAPE (100,399,2,'Harry Potter and the Half-Blood Prince','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Robbie Coltrane','half-blood-prince.jpg','https://www.imdb.com/title/tt0417741/');
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 1','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Alan Rickman','deathly-hallows-part-1.jpg','https://www.imdb.com/title/tt0926084/');
-CALL ADD_TAPE (100,399,1,'Harry Potter and the Deathly Hallows: Part 2','Chris Columbus','A Boy who became a wizard','Fantasy',10,'Ralph Fiennes','deathly-hallows-part-2.jpg','https://www.imdb.com/title/tt1201607/');
+CALL ADD_TAPE (100,15,1,'Aquaman','James Wan','Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.','Sci-Fi',6,'Jason Momoa','aquaman.jpg','https://www.imdb.com/title/tt1477834/');
+CALL ADD_TAPE (100,15,5,'The Avengers','Joss Whedon','Earth mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.','Sci-Fi',10,'Chris Evans','avengers.jpg','https://www.imdb.com/title/tt0848228/');
+CALL ADD_TAPE (100,15,2,'Batman Begins','Christopher Nolan','After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.','Sci-Fi',10,'Christian Bale','batman.jpg','https://www.imdb.com/title/tt0372784/');
+CALL ADD_TAPE (100,15,4,'Iron Man 3','Shane Black','When Tony Starks world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.','Sci-Fi',10,'Robert Downey Jr.','ironman3.jpg','https://www.imdb.com/title/tt1300854/');
+CALL ADD_TAPE (100,15,3,'Spider-Man: Homecoming','Jon Watts','Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City.','Sci-Fi',10,'Tom Holland','spiderman.jpg','https://www.imdb.com/title/tt2250912/');
+CALL ADD_TAPE (100,15,2,'Thor','Kenneth Branagh','The powerful but arrogant god Thor is cast out of Asgard to live amongst humans in Midgard (Earth), where he soon becomes one of their finest defenders.','Sci-Fi',10,'Chris Hemsworth','thor.jpg','https://www.imdb.com/title/tt0800369/');
+CALL ADD_TAPE (100,15,1,'Man of Steel','Zack Snyder','An alien child is evacuated from his dying world and sent to Earth to live among humans. His peace is threatened, when other survivors of his home planet invade Earth.','Sci-Fi',7,'Henry Cavill','superman.jpg','https://www.imdb.com/title/tt0770828/');
+CALL ADD_TAPE (100,15,1,'X-Men Origins: Wolverine','Gavin Hood',' The early years of James Logan, featuring his rivalry with his brother Victor Creed, his service in the special forces team Weapon X, and his experimentation into the metal-lined mutant Wolverine.','Sci-Fi',6,'Hugh Jackman','wolverine.jpg','https://www.imdb.com/title/tt0458525/');
 
 
 
